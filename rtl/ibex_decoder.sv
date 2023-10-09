@@ -343,6 +343,11 @@ module ibex_decoder #(
         rf_we            = 1'b1;
       end
 
+      OPCODE_LUI_ADDI: begin
+        rf_we            = 1'b1;
+        rf_lui_addi_we    = 1'b1;  //others needs to be set to 0
+      end
+
       OPCODE_AUIPC: begin  // Add Upper Immediate to PC
         rf_we            = 1'b1;
       end
@@ -808,6 +813,14 @@ module ibex_decoder #(
         alu_operator_o      = ALU_ADD;
       end
 
+      OPCODE_LUI_ADDI: begin
+        alu_op_a_mux_sel_o  = OP_A_IMM;
+        alu_op_b_mux_sel_o  = OP_B_IMM;
+        imm_a_mux_sel_o     = IMM_A_ZERO;
+        imm_b_mux_sel_o     = IMM_B_U;
+        alu_operator_o      = ALU_ADD;
+      end
+
       OPCODE_AUIPC: begin  // Add Upper Immediate to PC
         alu_op_a_mux_sel_o  = OP_A_CURRPC;
         alu_op_b_mux_sel_o  = OP_B_IMM;
@@ -1195,6 +1208,7 @@ module ibex_decoder #(
 
   // do not propgate regfile write enable if non-available registers are accessed in RV32E
   assign rf_we_o = rf_we & ~illegal_reg_rv32e;
+  assign rf_lui_addi_we_o = rf_lui_addi_we;
 
   // Not all bits are used
   assign unused_instr_alu = {instr_alu[19:15],instr_alu[11:7]};

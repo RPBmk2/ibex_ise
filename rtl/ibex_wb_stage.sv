@@ -40,7 +40,9 @@ module ibex_wb_stage #(
 
   input  logic [4:0]               rf_waddr_id_i,
   input  logic [31:0]              rf_wdata_id_i,
+  input  logic [31:0]              rf_wdata_id_imm_c_i,
   input  logic                     rf_we_id_i,
+  input  logic                     rf_lui_addi_we_i,
 
   input  logic                     dummy_instr_id_i,
 
@@ -198,8 +200,15 @@ module ibex_wb_stage #(
   end else begin : g_bypass_wb
     // without writeback stage just pass through register write signals
     assign rf_waddr_wb_o         = rf_waddr_id_i;
-    assign rf_wdata_wb_mux[0]    = rf_wdata_id_i;
+    //assign rf_wdata_wb_mux[0]    = rf_wdata_id_i;
+    if (rf_lui_addi_we_i) begin //lui_addi logic
+      rf_wdata_wb_mux[0] = rf_wdata_id_i + rf_wdata_imm_c_i
+    end else begin:
+      rf_wdata_wb_mux[0] = rf_wdata_id_i;
+    end
+
     assign rf_wdata_wb_mux_we[0] = rf_we_id_i;
+    
     assign rf_wdata_wb_mux_we[1] = rf_we_lsu_i;
 
     assign dummy_instr_wb_o = dummy_instr_id_i;

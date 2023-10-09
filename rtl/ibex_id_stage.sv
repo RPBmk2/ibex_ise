@@ -161,7 +161,9 @@ module ibex_id_stage #(
   // Register file write (via writeback)
   output logic [4:0]                rf_waddr_id_o,
   output logic [31:0]               rf_wdata_id_o,
+  output logic [31:0]               rf_wdata_id_imm_c_o,//lui_addi imm_a out from id
   output logic                      rf_we_id_o,
+  output logic                      rf_lui_addi_we_id_o,
   output logic                      rf_rd_a_wb_match_o,
   output logic                      rf_rd_b_wb_match_o,
 
@@ -414,6 +416,7 @@ module ibex_id_stage #(
 
   // Suppress register write if there is an illegal CSR access or instruction is not executing
   assign rf_we_id_o = rf_we_raw & instr_executing & ~illegal_csr_insn_i;
+  assign rf_lui_addi_we_id_o = rf_lui_addi_we_dec;
 
   // Register file write data mux
   always_comb begin : rf_wdata_id_mux
@@ -423,6 +426,8 @@ module ibex_id_stage #(
       default:   rf_wdata_id_o = result_ex_i;
     endcase
   end
+
+  assign rf_wdata_id_imm_c_o = imm_a; //lui_addi assign imm_a to output
 
   /////////////
   // Decoder //
@@ -470,6 +475,7 @@ module ibex_id_stage #(
     // register file
     .rf_wdata_sel_o(rf_wdata_sel),
     .rf_we_o       (rf_we_dec),
+    .rf_lui_addi_we_o (rf_lui_addi_we_dec),
 
     .rf_raddr_a_o(rf_raddr_a_o),
     .rf_raddr_b_o(rf_raddr_b_o),
