@@ -28,6 +28,7 @@ module ibex_controller #(
   input  logic                  wfi_insn_i,              // decoder has WFI instr
   input  logic                  ebrk_insn_i,             // decoder has EBREAK instr
   input  logic                  csr_pipe_flush_i,        // do CSR-related pipeline flush
+  input  logic                  lw_sw_insn_i,
 
   // instr from IF-ID pipeline stage
   input  logic                  instr_valid_i,           // instr is valid

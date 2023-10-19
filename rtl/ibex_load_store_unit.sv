@@ -197,9 +197,9 @@ module ibex_load_store_unit #(
 
   // register for unaligned rdata
   always_ff @(posedge clk_i or negedge rst_ni) begin
-    if (!rst_ni and !lsu_lw_sw_en_i) begin
+    if (!rst_ni) begin
       rdata_q <= '0;
-    end else if (!rst_ni and lsu_lw_sw_en_i) begin
+    end else if (lsu_lw_sw_en_i) begin
       rdata_q <= rdata_q;
     end else if (rdata_update) begin
       rdata_q <= data_rdata_i[31:8];
@@ -208,12 +208,12 @@ module ibex_load_store_unit #(
 
   // registers for transaction control
   always_ff @(posedge clk_i or negedge rst_ni) begin
-    if (!rst_ni and !lsu_lw_sw_en_i) begin
+    if (!rst_ni) begin
       rdata_offset_q  <= 2'h0;
       data_type_q     <= 2'h0;
       data_sign_ext_q <= 1'b0;
       data_we_q       <= 1'b0;
-    end else if (!rst_ni and lsu_lw_sw_en_i) begin
+    end else if (lsu_lw_sw_en_i) begin
       rdata_offset_q  <= rdata_offset_q;
       data_type_q     <= 2'b00;
       data_sign_ext_q <= data_sign_ext_q;
@@ -233,9 +233,9 @@ module ibex_load_store_unit #(
   assign addr_last_d = addr_incr_req_o ? data_addr_w_aligned : data_addr;
 
   always_ff @(posedge clk_i or negedge rst_ni) begin
-    if (!rst_ni and !lsu_lw_sw_en_i) begin
+    if (!rst_ni) begin
       addr_last_q <= '0;
-    end else if (!rst_ni and lsu_lw_sw_en_i) begin
+    end else if (lsu_lw_sw_en_i) begin
       addr_last_q <= addr_last_q;
     end else if (addr_update) begin
       addr_last_q <= addr_last_d;
@@ -506,13 +506,13 @@ module ibex_load_store_unit #(
 
   // registers for FSM
   always_ff @(posedge clk_i or negedge rst_ni) begin
-    if (!rst_ni and !lsu_lw_sw_en_i) begin
+    if (!rst_ni) begin
       ls_fsm_cs           <= IDLE;
       data_we_lw_sw_q     <= lsu_we_i;
       handle_misaligned_q <= '0;
       pmp_err_q           <= '0;
       lsu_err_q           <= '0;
-    end else if (!rst_ni and lsu_lw_sw_en_i) begin
+    end else if (lsu_lw_sw_en_i) begin
       ls_fsm_cs           <= ls_fsm_cs;
       data_we_lw_sw_q     <= 1'b1;
       handle_misaligned_q <= handle_misaligned_q;
@@ -608,10 +608,10 @@ module ibex_load_store_unit #(
                                                                       fcov_mis_bus_err_1_q ;
 
   always_ff @(posedge clk_i or negedge rst_ni) begin
-    if (!rst_ni and !lsu_lw_sw_en_i) begin
+    if (!rst_ni) begin
       fcov_mis_2_en_q <= 1'b0;
       fcov_mis_bus_err_1_q <= 1'b0;
-    end else if (!rst_ni and lsu_lw_sw_en_i) begin
+    end else if (lsu_lw_sw_en_i) begin
       fcov_mis_2_en_q <= fcov_mis_2_en_q;
       fcov_mis_bus_err_1_q <= fcov_mis_bus_err_1_q;
     end else begin

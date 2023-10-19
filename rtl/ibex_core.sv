@@ -766,6 +766,7 @@ module ibex_core import ibex_pkg::*; #(
     .data_be_o        (data_be_o),
     .data_wdata_o     (data_wdata_o),
     .data_rdata_i     (data_rdata_i),
+    .lsu_operand_c_i  (lsu_operand_c),
 
     // signals to/from ID/EX stage
     .lsu_we_i      (lsu_we),
