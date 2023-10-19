@@ -252,6 +252,7 @@ module ibex_core import ibex_pkg::*; #(
   alu_op_e     alu_operator_ex;
   logic [31:0] alu_operand_a_ex;
   logic [31:0] alu_operand_b_ex;
+  logic [31:0] lsu_operand_c;
 
   logic [31:0] bt_a_operand;
   logic [31:0] bt_b_operand;
@@ -284,6 +285,7 @@ module ibex_core import ibex_pkg::*; #(
   // Data Memory Control
   logic        lsu_we;
   logic [1:0]  lsu_type;
+  logic        lsu_lw_sw_en;
   logic        lsu_sign_ext;
   logic        lsu_req;
   logic [31:0] lsu_wdata;
@@ -583,6 +585,7 @@ module ibex_core import ibex_pkg::*; #(
     .alu_operator_ex_o (alu_operator_ex),
     .alu_operand_a_ex_o(alu_operand_a_ex),
     .alu_operand_b_ex_o(alu_operand_b_ex),
+    .lsu_operand_c_o   (lsu_operand_c),
 
     .imd_val_q_ex_o (imd_val_q_ex),
     .imd_val_d_ex_i (imd_val_d_ex),
@@ -621,6 +624,7 @@ module ibex_core import ibex_pkg::*; #(
     .lsu_req_o     (lsu_req),  // to load store unit
     .lsu_we_o      (lsu_we),  // to load store unit
     .lsu_type_o    (lsu_type),  // to load store unit
+    .lsu_lw_sw_en_o(lsu_lw_sw_en),
     .lsu_sign_ext_o(lsu_sign_ext),  // to load store unit
     .lsu_wdata_o   (lsu_wdata),  // to load store unit
     .lsu_req_done_i(lsu_req_done),  // from load store unit
@@ -766,6 +770,7 @@ module ibex_core import ibex_pkg::*; #(
     // signals to/from ID/EX stage
     .lsu_we_i      (lsu_we),
     .lsu_type_i    (lsu_type),
+    .lsu_lw_sw_en_i(lsu_lw_sw_en),
     .lsu_wdata_i   (lsu_wdata),
     .lsu_sign_ext_i(lsu_sign_ext),
 

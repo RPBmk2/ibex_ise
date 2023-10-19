@@ -71,6 +71,7 @@ module ibex_id_stage #(
   output ibex_pkg::alu_op_e         alu_operator_ex_o,
   output logic [31:0]               alu_operand_a_ex_o,
   output logic [31:0]               alu_operand_b_ex_o,
+  output logic [31:0]               lsu_operand_c_o,
 
   // Multicycle Operation Stage Register
   input  logic [1:0]                imd_val_we_ex_i,
@@ -112,6 +113,7 @@ module ibex_id_stage #(
   output logic                      lsu_req_o,
   output logic                      lsu_we_o,
   output logic [1:0]                lsu_type_o,
+  output logic                      lsu_lw_sw_en_o,
   output logic                      lsu_sign_ext_o,
   output logic [31:0]               lsu_wdata_o,
 
@@ -499,6 +501,7 @@ module ibex_id_stage #(
     .data_req_o           (lsu_req_dec),
     .data_we_o            (lsu_we),
     .data_type_o          (lsu_type),
+    .lw_sw_en_o           (lsu_lw_sw_en_o),
     .data_sign_extension_o(lsu_sign_ext),
 
     // jump/branches
@@ -667,6 +670,8 @@ module ibex_id_stage #(
   assign alu_operator_ex_o           = alu_operator;
   assign alu_operand_a_ex_o          = alu_operand_a;
   assign alu_operand_b_ex_o          = alu_operand_b;
+  assign lsu_operand_c_o             = imm_a;
+
 
   assign mult_en_ex_o                = mult_en_id;
   assign div_en_ex_o                 = div_en_id;

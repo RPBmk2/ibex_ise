@@ -37,7 +37,9 @@ module ibex_load_store_unit #(
   // signals to/from ID/EX stage
   input  logic         lsu_we_i,             // write enable                     -> from ID/EX
   input  logic [1:0]   lsu_type_i,           // data type: word, half word, byte -> from ID/EX
+  input  logic         lsu_lw_sw_en_i,
   input  logic [31:0]  lsu_wdata_i,          // data to write to memory          -> from ID/EX
+  input  logic [31:0]  lsu_operand_c_i,
   input  logic         lsu_sign_ext_i,       // sign extension                   -> from ID/EX
 
   output logic [31:0]  lsu_rdata_o,          // requested data                   -> to ID/EX
@@ -108,7 +110,14 @@ module ibex_load_store_unit #(
 
   ls_fsm_e ls_fsm_cs, ls_fsm_ns;
 
-  assign data_addr   = adder_result_ex_i;
+
+  always_comb begin
+    if (lsu_lw_sw_en_i) begin
+      data_addr   = rdata_w_ext + lsu_operand_c_i;
+    end else begin 
+      data_addr   = adder_result_ex_i;
+    end
+  end
   assign data_offset = data_addr[1:0];
 
   ///////////////////
@@ -188,8 +197,10 @@ module ibex_load_store_unit #(
 
   // register for unaligned rdata
   always_ff @(posedge clk_i or negedge rst_ni) begin
-    if (!rst_ni) begin
+    if (!rst_ni and !lsu_lw_sw_en_i) begin
       rdata_q <= '0;
+    end else if (!rst_ni and lsu_lw_sw_en_i) begin
+      rdata_q <= rdata_q;
     end else if (rdata_update) begin
       rdata_q <= data_rdata_i[31:8];
     end
@@ -197,11 +208,16 @@ module ibex_load_store_unit #(
 
   // registers for transaction control
   always_ff @(posedge clk_i or negedge rst_ni) begin
-    if (!rst_ni) begin
+    if (!rst_ni and !lsu_lw_sw_en_i) begin
       rdata_offset_q  <= 2'h0;
       data_type_q     <= 2'h0;
       data_sign_ext_q <= 1'b0;
       data_we_q       <= 1'b0;
+    end else if (!rst_ni and lsu_lw_sw_en_i) begin
+      rdata_offset_q  <= rdata_offset_q;
+      data_type_q     <= 2'b00;
+      data_sign_ext_q <= data_sign_ext_q;
+      data_we_q       <= 1'b1;
     end else if (ctrl_update) begin
       rdata_offset_q  <= data_offset;
       data_type_q     <= lsu_type_i;
@@ -217,8 +233,10 @@ module ibex_load_store_unit #(
   assign addr_last_d = addr_incr_req_o ? data_addr_w_aligned : data_addr;
 
   always_ff @(posedge clk_i or negedge rst_ni) begin
-    if (!rst_ni) begin
+    if (!rst_ni and !lsu_lw_sw_en_i) begin
       addr_last_q <= '0;
+    end else if (!rst_ni and lsu_lw_sw_en_i) begin
+      addr_last_q <= addr_last_q;
     end else if (addr_update) begin
       addr_last_q <= addr_last_d;
     end
@@ -488,13 +506,21 @@ module ibex_load_store_unit #(
 
   // registers for FSM
   always_ff @(posedge clk_i or negedge rst_ni) begin
-    if (!rst_ni) begin
+    if (!rst_ni and !lsu_lw_sw_en_i) begin
       ls_fsm_cs           <= IDLE;
+      data_we_lw_sw_q     <= lsu_we_i;
       handle_misaligned_q <= '0;
       pmp_err_q           <= '0;
       lsu_err_q           <= '0;
+    end else if (!rst_ni and lsu_lw_sw_en_i) begin
+      ls_fsm_cs           <= ls_fsm_cs;
+      data_we_lw_sw_q     <= 1'b1;
+      handle_misaligned_q <= handle_misaligned_q;
+      pmp_err_q           <= pmp_err_q;
+      lsu_err_q           <= lsu_err_q;
     end else begin
       ls_fsm_cs           <= ls_fsm_ns;
+      data_we_lw_sw_q     <= lsu_we_i;
       handle_misaligned_q <= handle_misaligned_d;
       pmp_err_q           <= pmp_err_d;
       lsu_err_q           <= lsu_err_d;
@@ -518,7 +544,7 @@ module ibex_load_store_unit #(
 
   // output to data interface
   assign data_addr_o   = data_addr_w_aligned;
-  assign data_we_o     = lsu_we_i;
+  assign data_we_o     = data_we_lw_sw_q;//TODO
   assign data_be_o     = data_be;
 
   /////////////////////////////////////
@@ -582,9 +608,12 @@ module ibex_load_store_unit #(
                                                                       fcov_mis_bus_err_1_q ;
 
   always_ff @(posedge clk_i or negedge rst_ni) begin
-    if (!rst_ni) begin
+    if (!rst_ni and !lsu_lw_sw_en_i) begin
       fcov_mis_2_en_q <= 1'b0;
       fcov_mis_bus_err_1_q <= 1'b0;
+    end else if (!rst_ni and lsu_lw_sw_en_i) begin
+      fcov_mis_2_en_q <= fcov_mis_2_en_q;
+      fcov_mis_bus_err_1_q <= fcov_mis_bus_err_1_q;
     end else begin
       fcov_mis_2_en_q <= fcov_mis_2_en_d;
       fcov_mis_bus_err_1_q <= fcov_mis_bus_err_1_d;

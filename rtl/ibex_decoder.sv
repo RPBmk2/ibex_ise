@@ -89,6 +89,7 @@ module ibex_decoder #(
   output logic                 data_we_o,             // write enable
   output logic [1:0]           data_type_o,           // size of transaction: byte, half
                                                       // word or word
+  output logic                 lw_sw_en_o,
   output logic                 data_sign_extension_o, // sign extension for data read from
                                                       // memory
 
@@ -222,6 +223,7 @@ module ibex_decoder #(
 
     data_we_o             = 1'b0;
     data_type_o           = 2'b00;
+    lw_sw_en_o            = 1'b0;
     data_sign_extension_o = 1'b0;
     data_req_o            = 1'b0;
 
@@ -329,6 +331,14 @@ module ibex_decoder #(
               illegal_insn = 1'b1;    // lwu does not exist
             end
           end
+
+          2'b11: begin
+            data_type_o = 2'b00;    // lw_sw
+            data_req_o  = 1'b1;
+            data_we_o   = 1'b0;
+            lw_sw_en_o  = 1'b1;      //others should be set to 0
+          end
+
           default: begin
             illegal_insn = 1'b1;
           end
