@@ -110,9 +110,22 @@ module ibex_load_store_unit #(
 
   ls_fsm_e ls_fsm_cs, ls_fsm_ns;
 
+  logic lsu_lw_sw_state;
+  logic data_operand_c_en_q;
+  always_ff @(posedge clk_i or negedge rst_ni) begin //TODO FSM
+    if (!rst_ni) begin
+      lsu_lw_sw_state         <= 1'b0;
+    end else if (lsu_lw_sw_en and !lsu_lw_sw_state) begin
+      lsu_lw_sw_state         <= 1'b1; //SW
+      data_operand_c_en_q     <= 1'b1;
+    end else if (lsu_lw_sw_state) begin
+      lsu_lw_sw_state         <= 1'b0; //IDEL
+      data_operand_c_en_q     <= 1'b0;
+    end
+  end
 
   always_comb begin
-    if (lsu_lw_sw_en_i) begin
+    if (data_operand_c_en_q) begin
       data_addr   = rdata_w_ext + lsu_operand_c_i;
     end else begin 
       data_addr   = adder_result_ex_i;

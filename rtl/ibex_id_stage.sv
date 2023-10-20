@@ -641,7 +641,7 @@ module ibex_id_stage #(
     .debug_ebreaku_i      (debug_ebreaku_i),
     .trigger_match_i      (trigger_match_i),
 
-    .stall_id_i(stall_id_q),
+    .stall_id_i(stall_id),
     .stall_wb_i(stall_wb),
     .flush_id_o(flush_id),
     .ready_wb_i(ready_wb_i),
@@ -790,12 +790,10 @@ module ibex_id_stage #(
   end
 
   logic lw_sw_state;
-  logic stall_id_d;
   logic stall_id_q;
   always_ff @(posedge clk_i or negedge rst_ni) begin //TODO FSM
     if (!rst_ni) begin
       lw_sw_state    <= 1'b0;
-      stall_id_q     <= stall_id_d;
     end else if (lsu_lw_sw_en and !lw_sw_state) begin
       lw_sw_state    <= 1'b1; //SW
       stall_id_q     <= 1'b1;
@@ -910,8 +908,7 @@ module ibex_id_stage #(
   // Stall ID/EX stage for reason that relates to instruction in ID/EX, update assertion below if
   // modifying this.
   assign stall_id   = stall_ld_hz | stall_mem | stall_multdiv | stall_jump | stall_branch |
-                      stall_alu;
-  assign stall_id_d = stall_ld;
+                      stall_alu   | stall_id_q;
 
   // Generally illegal instructions have no reason to stall, however they must still stall waiting
   // for outstanding memory requests so exceptions related to them take priority over the illegal
