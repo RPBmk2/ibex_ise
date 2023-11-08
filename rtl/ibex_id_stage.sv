@@ -574,7 +574,7 @@ module ibex_id_stage #(
     .wfi_insn_i      (wfi_insn_dec),
     .ebrk_insn_i     (ebrk_insn),
     .csr_pipe_flush_i(csr_pipe_flush),
-    .lw_sw_insn_i    (lw_sw_en_o),
+    // .lw_sw_insn_i    (lw_sw_en_o),
 
     // from IF-ID pipeline
     .instr_valid_i          (instr_valid_i),
@@ -794,7 +794,7 @@ module ibex_id_stage #(
   always_ff @(posedge clk_i or negedge rst_ni) begin //TODO FSM
     if (!rst_ni) begin
       lw_sw_state    <= 1'b0;
-    end else if (lsu_lw_sw_en and !lw_sw_state) begin
+    end else if (lsu_lw_sw_en_o & !lw_sw_state) begin
       lw_sw_state    <= 1'b1; //SW
       stall_id_q     <= 1'b1;
     end else if (lw_sw_state) begin

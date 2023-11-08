@@ -115,7 +115,7 @@ module ibex_load_store_unit #(
   always_ff @(posedge clk_i or negedge rst_ni) begin //TODO FSM
     if (!rst_ni) begin
       lsu_lw_sw_state         <= 1'b0;
-    end else if (lsu_lw_sw_en and !lsu_lw_sw_state) begin
+    end else if (lsu_lw_sw_en_i & !lsu_lw_sw_state) begin
       lsu_lw_sw_state         <= 1'b1; //SW
       data_operand_c_en_q     <= 1'b1;
     end else if (lsu_lw_sw_state) begin
@@ -555,6 +555,7 @@ module ibex_load_store_unit #(
   // output data address must be word aligned
   assign data_addr_w_aligned = {data_addr[31:2], 2'b00};
 
+  logic data_we_lw_sw_q;
   // output to data interface
   assign data_addr_o   = data_addr_w_aligned;
   assign data_we_o     = data_we_lw_sw_q;//TODO
