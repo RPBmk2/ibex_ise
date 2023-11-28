@@ -789,19 +789,6 @@ module ibex_id_stage #(
     end
   end
 
-  logic lw_sw_state;
-  logic stall_id_q;
-  always_ff @(posedge clk_i or negedge rst_ni) begin //TODO FSM
-    if (!rst_ni) begin
-      lw_sw_state    <= 1'b0;
-    end else if (lsu_lw_sw_en_o & !lw_sw_state) begin
-      lw_sw_state    <= 1'b1; //SW
-      stall_id_q     <= 1'b1;
-    end else if (lw_sw_state) begin
-      lw_sw_state    <= 1'b0; //IDEL
-      stall_id_q     <= 1'b0;
-    end
-  end
 
   // ID/EX stage can be in two states, FIRST_CYCLE and MULTI_CYCLE. An instruction enters
   // MULTI_CYCLE if it requires multiple cycles to complete regardless of stalls and other
@@ -908,7 +895,7 @@ module ibex_id_stage #(
   // Stall ID/EX stage for reason that relates to instruction in ID/EX, update assertion below if
   // modifying this.
   assign stall_id   = stall_ld_hz | stall_mem | stall_multdiv | stall_jump | stall_branch |
-                      stall_alu   | stall_id_q;
+                      stall_alu;
 
   // Generally illegal instructions have no reason to stall, however they must still stall waiting
   // for outstanding memory requests so exceptions related to them take priority over the illegal

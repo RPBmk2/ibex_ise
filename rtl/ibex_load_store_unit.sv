@@ -111,21 +111,9 @@ module ibex_load_store_unit #(
   ls_fsm_e ls_fsm_cs, ls_fsm_ns;
 
   logic lsu_lw_sw_state;
-  logic data_operand_c_en_q;
-  always_ff @(posedge clk_i or negedge rst_ni) begin //TODO FSM
-    if (!rst_ni) begin
-      lsu_lw_sw_state         <= 1'b0;
-    end else if (lsu_lw_sw_en_i & !lsu_lw_sw_state) begin
-      lsu_lw_sw_state         <= 1'b1; //SW
-      data_operand_c_en_q     <= 1'b1;
-    end else if (lsu_lw_sw_state) begin
-      lsu_lw_sw_state         <= 1'b0; //IDEL
-      data_operand_c_en_q     <= 1'b0;
-    end
-  end
 
   always_comb begin
-    if (data_operand_c_en_q) begin
+    if (lsu_lw_sw_state) begin
       data_addr   = rdata_w_ext + lsu_operand_c_i;
     end else begin 
       data_addr   = adder_result_ex_i;
@@ -212,8 +200,6 @@ module ibex_load_store_unit #(
   always_ff @(posedge clk_i or negedge rst_ni) begin
     if (!rst_ni) begin
       rdata_q <= '0;
-    end else if (lsu_lw_sw_en_i) begin
-      rdata_q <= rdata_q;
     end else if (rdata_update) begin
       rdata_q <= data_rdata_i[31:8];
     end
@@ -226,16 +212,11 @@ module ibex_load_store_unit #(
       data_type_q     <= 2'h0;
       data_sign_ext_q <= 1'b0;
       data_we_q       <= 1'b0;
-    end else if (lsu_lw_sw_en_i) begin
-      rdata_offset_q  <= rdata_offset_q;
-      data_type_q     <= 2'b00;
-      data_sign_ext_q <= data_sign_ext_q;
-      data_we_q       <= 1'b1;
     end else if (ctrl_update) begin
       rdata_offset_q  <= data_offset;
       data_type_q     <= lsu_type_i;
       data_sign_ext_q <= lsu_sign_ext_i;
-      data_we_q       <= lsu_we_i;
+      data_we_q       <= (lsu_we_i | lsu_lw_sw_state); //todo
     end
   end
 
@@ -248,8 +229,6 @@ module ibex_load_store_unit #(
   always_ff @(posedge clk_i or negedge rst_ni) begin
     if (!rst_ni) begin
       addr_last_q <= '0;
-    end else if (lsu_lw_sw_en_i) begin
-      addr_last_q <= addr_last_q;
     end else if (addr_update) begin
       addr_last_q <= addr_last_d;
     end
@@ -394,6 +373,14 @@ module ibex_load_store_unit #(
       ((lsu_type_i == 2'b00) && (data_offset != 2'b00)) || // misaligned word access
       ((lsu_type_i == 2'b01) && (data_offset == 2'b11));   // misaligned half-word access
 
+  always @(posedge clk_i or negedge rst_ni) begin
+    if (!rst_ni) begin
+      lsu_lw_sw_state <= '0;
+    end
+    else if(lsu_lw_sw_en_i & data_rvalid_i) begin
+      lsu_lw_sw_state <= ~lsu_lw_sw_state;
+    end
+  end
   // FSM
   always_comb begin
     ls_fsm_ns       = ls_fsm_cs;
@@ -410,7 +397,6 @@ module ibex_load_store_unit #(
 
     perf_load_o         = 1'b0;
     perf_store_o        = 1'b0;
-
     unique case (ls_fsm_cs)
 
       IDLE: begin
@@ -421,7 +407,7 @@ module ibex_load_store_unit #(
           lsu_err_d    = 1'b0;
           perf_load_o  = ~lsu_we_i;
           perf_store_o = lsu_we_i;
-
+          
           if (data_gnt_i) begin
             ctrl_update         = 1'b1;
             addr_update         = 1'b1;
@@ -515,25 +501,18 @@ module ibex_load_store_unit #(
     endcase
   end
 
-  assign lsu_req_done_o = (lsu_req_i | (ls_fsm_cs != IDLE)) & (ls_fsm_ns == IDLE);
+  assign lsu_req_done_o = (lsu_req_i | (ls_fsm_cs != IDLE)) & (ls_fsm_ns == IDLE) & 
+      (~lsu_lw_sw_en_i | (lsu_lw_sw_state & data_rvalid_i));
 
   // registers for FSM
   always_ff @(posedge clk_i or negedge rst_ni) begin
     if (!rst_ni) begin
       ls_fsm_cs           <= IDLE;
-      data_we_lw_sw_q     <= lsu_we_i;
       handle_misaligned_q <= '0;
       pmp_err_q           <= '0;
       lsu_err_q           <= '0;
-    end else if (lsu_lw_sw_en_i) begin
-      ls_fsm_cs           <= ls_fsm_cs;
-      data_we_lw_sw_q     <= 1'b1;
-      handle_misaligned_q <= handle_misaligned_q;
-      pmp_err_q           <= pmp_err_q;
-      lsu_err_q           <= lsu_err_q;
     end else begin
       ls_fsm_cs           <= ls_fsm_ns;
-      data_we_lw_sw_q     <= lsu_we_i;
       handle_misaligned_q <= handle_misaligned_d;
       pmp_err_q           <= pmp_err_d;
       lsu_err_q           <= lsu_err_d;
@@ -545,9 +524,10 @@ module ibex_load_store_unit #(
   /////////////
 
   assign data_or_pmp_err    = lsu_err_q | data_bus_err_i | pmp_err_q;
-  assign lsu_resp_valid_o   = (data_rvalid_i | pmp_err_q) & (ls_fsm_cs == IDLE);
+  assign lsu_resp_valid_o   = ((data_rvalid_i & ~lsu_lw_sw_en_i) | (data_rvalid_i & lsu_lw_sw_state) 
+      | pmp_err_q) & (ls_fsm_cs == IDLE);
   assign lsu_rdata_valid_o  =
-    (ls_fsm_cs == IDLE) & data_rvalid_i & ~data_or_pmp_err & ~data_we_q & ~data_intg_err;
+    (ls_fsm_cs == IDLE) & data_rvalid_i & ~data_or_pmp_err & ~data_we_q & ~lsu_lw_sw_en_i & ~data_intg_err;
 
   // output to register file
   assign lsu_rdata_o = data_rdata_ext;
@@ -555,10 +535,15 @@ module ibex_load_store_unit #(
   // output data address must be word aligned
   assign data_addr_w_aligned = {data_addr[31:2], 2'b00};
 
-  logic data_we_lw_sw_q;
   // output to data interface
   assign data_addr_o   = data_addr_w_aligned;
-  assign data_we_o     = data_we_lw_sw_q;//TODO
+  always_comb begin
+    if (lsu_lw_sw_state) begin
+      data_we_o   = 1'b1;
+    end else begin 
+      data_we_o   = lsu_we_i;
+    end
+  end
   assign data_be_o     = data_be;
 
   /////////////////////////////////////
@@ -625,9 +610,6 @@ module ibex_load_store_unit #(
     if (!rst_ni) begin
       fcov_mis_2_en_q <= 1'b0;
       fcov_mis_bus_err_1_q <= 1'b0;
-    end else if (lsu_lw_sw_en_i) begin
-      fcov_mis_2_en_q <= fcov_mis_2_en_q;
-      fcov_mis_bus_err_1_q <= fcov_mis_bus_err_1_q;
     end else begin
       fcov_mis_2_en_q <= fcov_mis_2_en_d;
       fcov_mis_bus_err_1_q <= fcov_mis_bus_err_1_d;
