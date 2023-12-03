@@ -36,6 +36,7 @@ module ibex_id_stage #(
   // Interface to IF stage
   input  logic                      instr_valid_i,
   input  logic [31:0]               instr_rdata_i,         // from IF-ID pipeline registers
+  input  logic [31:0]               instr_prev_rsev_id_i,  // from IF-ID pipeline registers
   input  logic [31:0]               instr_rdata_alu_i,     // from IF-ID pipeline registers
   input  logic [15:0]               instr_rdata_c_i,       // from IF-ID pipeline registers
   input  logic                      instr_is_compressed_i,
@@ -453,6 +454,7 @@ module ibex_id_stage #(
     // from IF-ID pipeline register
     .instr_first_cycle_i(instr_first_cycle),
     .instr_rdata_i      (instr_rdata_i),
+    .instr_prev_rsev_id_i(instr_prev_rsev_id_i),
     .instr_rdata_alu_i  (instr_rdata_alu_i),
     .illegal_c_insn_i   (illegal_c_insn_i),
 
@@ -671,7 +673,7 @@ module ibex_id_stage #(
   assign alu_operator_ex_o           = alu_operator;
   assign alu_operand_a_ex_o          = alu_operand_a;
   assign alu_operand_b_ex_o          = alu_operand_b;
-  assign lsu_operand_c_o             = imm_a;
+  assign lsu_operand_c_o             = instr_rdata_i[11:7];
 
 
   assign mult_en_ex_o                = mult_en_id;

@@ -170,6 +170,7 @@ module ibex_core import ibex_pkg::*; #(
   logic        instr_valid_id;
   logic        instr_new_id;
   logic [31:0] instr_rdata_id;                 // Instruction sampled inside IF stage
+  logic [31:0] instr_prev_rsev_id;             // Prev Instruction inside ID stage
   logic [31:0] instr_rdata_alu_id;             // Instruction sampled inside IF stage (replicated to
                                                // ease fan-out)
   logic [15:0] instr_rdata_c_id;               // Compressed instruction sampled inside IF stage
@@ -455,6 +456,7 @@ module ibex_core import ibex_pkg::*; #(
     .instr_valid_id_o        (instr_valid_id),
     .instr_new_id_o          (instr_new_id),
     .instr_rdata_id_o        (instr_rdata_id),
+    .instr_prev_rsev_id_o    (instr_prev_rsev_id),
     .instr_rdata_alu_id_o    (instr_rdata_alu_id),
     .instr_rdata_c_id_o      (instr_rdata_c_id),
     .instr_is_compressed_id_o(instr_is_compressed_id),
@@ -550,6 +552,7 @@ module ibex_core import ibex_pkg::*; #(
     // from/to IF-ID pipeline register
     .instr_valid_i        (instr_valid_id),
     .instr_rdata_i        (instr_rdata_id),
+    .instr_prev_rsev_id_i (instr_prev_rsev_id),
     .instr_rdata_alu_i    (instr_rdata_alu_id),
     .instr_rdata_c_i      (instr_rdata_c_id),
     .instr_is_compressed_i(instr_is_compressed_id),

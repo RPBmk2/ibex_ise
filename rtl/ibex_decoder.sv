@@ -37,6 +37,7 @@ module ibex_decoder #(
   // from IF-ID pipeline register
   input  logic                 instr_first_cycle_i,   // instruction read is in its first cycle
   input  logic [31:0]          instr_rdata_i,         // instruction read from memory/cache
+  input  logic [31:0]          instr_prev_rsev_id_i,  // instruction read from memory/cache
   input  logic [31:0]          instr_rdata_alu_i,     // instruction read from memory/cache
                                                       // replicated to ease fan-out)
 
@@ -167,8 +168,9 @@ module ibex_decoder #(
   assign instr_rs1 = instr[19:15];
   assign instr_rs2 = instr[24:20];
   assign instr_rs3 = instr[31:27];
+  assign instr_prev_rs2 = instr_prev_rsev_id_i[11:7];
   assign rf_raddr_a_o = (use_rs3_q & ~instr_first_cycle_i) ? instr_rs3 : instr_rs1; // rs3 / rs1
-  assign rf_raddr_b_o = instr_rs2; // rs2
+  assign rf_raddr_b_o = lw_sw_en_o? instr_prev_rs2: instr_rs2; // rs2 todo
 
   // destination register
   assign instr_rd = instr[11:7];
