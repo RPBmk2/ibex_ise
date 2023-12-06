@@ -63,7 +63,7 @@ module ibex_if_stage import ibex_pkg::*; #(
   output logic                        instr_valid_id_o,         // instr in IF-ID is valid
   output logic                        instr_new_id_o,           // instr in IF-ID is new
   output logic [31:0]                 instr_rdata_id_o,         // instr for ID stage
-  output logic [31:0]                 instr_prev_rsev_id_o,
+  output logic [4: 0]                 instr_prev_rd_id_o,
   output logic [31:0]                 instr_rdata_alu_id_o,     // replicated instr for ID stage
                                                                 // to reduce fan-out
   output logic [15:0]                 instr_rdata_c_id_o,       // compressed instr for ID stage
@@ -539,18 +539,19 @@ module ibex_if_stage import ibex_pkg::*; #(
   if (ResetAll) begin : prev_instr_rd_reserve
     always_ff @(posedge clk_i or negedge rst_ni) begin
       if (!rst_ni) begin
-        instr_prev_rsev_id_o         <= '0;
+        instr_prev_rd_id_o         <= '0;
       end else if (if_id_pipe_reg_we) begin
-        instr_prev_rsev_id_o         <= instr_rdata_id_o;
+        instr_prev_rd_id_o         <= instr_rdata_id_o[11:7];
       end
     end
   end else begin : g_instr_rdata_nr
     always_ff @(posedge clk_i) begin
       if (if_id_pipe_reg_we) begin
-        instr_prev_rsev_id_o         <= instr_rdata_id_o;
+        instr_prev_rd_id_o         <= instr_rdata_id_o[11:7];
       end
     end
   end
+
   // Check for expected increments of the PC when security hardening enabled
   if (PCIncrCheck) begin : g_secure_pc
     // SEC_CM: PC.CTRL_FLOW.CONSISTENCY

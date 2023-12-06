@@ -673,7 +673,10 @@ module ibex_tracer (
       mnemonic = "lbu";
     end else if (size == 3'b101) begin
       mnemonic = "lhu";
-    end else begin
+    end else if (size == 3'b011) begin
+      mnemonic = "lw_sw";
+    end
+    else begin
       decode_mnemonic("INVALID");
       return;
     end

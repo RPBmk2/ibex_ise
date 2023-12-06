@@ -59,6 +59,7 @@ module ibex_load_store_unit #(
                                               // response)                        -> to ID/EX
 
   output logic         lsu_resp_valid_o,     // LSU has response from transaction -> to ID/EX
+  output logic         lsu_valid_nostall_o,  // LSU give the end of stallmem      -> to ID/EX
 
   // exception signals
   output logic         load_err_o,
@@ -91,6 +92,7 @@ module ibex_load_store_unit #(
   logic [31:0]  data_wdata;
 
   logic [31:0]  data_rdata_ext;
+  logic [31:0]  data_rdata_rsrv;
 
   logic [31:0]  rdata_w_ext; // word realignment for misaligned loads
   logic [31:0]  rdata_h_ext; // sign extension for half words
@@ -114,7 +116,7 @@ module ibex_load_store_unit #(
 
   always_comb begin
     if (lsu_lw_sw_state) begin
-      data_addr   = rdata_w_ext + lsu_operand_c_i;
+      data_addr   = data_rdata_rsrv + lsu_operand_c_i;
     end else begin 
       data_addr   = adder_result_ex_i;
     end
@@ -376,9 +378,11 @@ module ibex_load_store_unit #(
   always @(posedge clk_i or negedge rst_ni) begin
     if (!rst_ni) begin
       lsu_lw_sw_state <= '0;
+      data_rdata_rsrv <= '0;
     end
-    else if(lsu_lw_sw_en_i & data_rvalid_i) begin
+    else if(lsu_lw_sw_en_i & data_rvalid_i & (ls_fsm_cs == IDLE)) begin
       lsu_lw_sw_state <= ~lsu_lw_sw_state;
+      data_rdata_rsrv <= rdata_w_ext;
     end
   end
   // FSM
@@ -524,8 +528,9 @@ module ibex_load_store_unit #(
   /////////////
 
   assign data_or_pmp_err    = lsu_err_q | data_bus_err_i | pmp_err_q;
-  assign lsu_resp_valid_o   = ((data_rvalid_i & ~lsu_lw_sw_en_i) | (data_rvalid_i & lsu_lw_sw_state) 
+  assign lsu_valid_nostall_o   = ((data_rvalid_i & ~lsu_lw_sw_en_i) | (data_rvalid_i & lsu_lw_sw_state) 
       | pmp_err_q) & (ls_fsm_cs == IDLE);
+  assign lsu_resp_valid_o   = (data_rvalid_i | pmp_err_q) & (ls_fsm_cs == IDLE);
   assign lsu_rdata_valid_o  =
     (ls_fsm_cs == IDLE) & data_rvalid_i & ~data_or_pmp_err & ~data_we_q & ~lsu_lw_sw_en_i & ~data_intg_err;
 
