@@ -115,7 +115,7 @@ module ibex_load_store_unit #(
   logic lsu_lw_sw_state;
 
   always_comb begin
-    if (lsu_lw_sw_state) begin
+    if (lsu_lw_sw_state & (ls_fsm_cs == IDLE)) begin
       data_addr   = data_rdata_rsrv + lsu_operand_c_i;
     end else begin 
       data_addr   = adder_result_ex_i;
