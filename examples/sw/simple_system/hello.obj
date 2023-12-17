@@ -1,0 +1,1235 @@
+
+hello_test/hello_test.o:     file format elf32-littleriscv
+
+
+Disassembly of section .rodata.str1.4:
+
+00000000 <.LC0>:
+   0:	6548                	.insn	2, 0x6548
+   2:	6c6c                	.insn	2, 0x6c6c
+   4:	6973206f          	j	32e9a <.LASF17+0x32ca2>
+   8:	706d                	c.lui	zero,0xffffb
+   a:	656c                	.insn	2, 0x656c
+   c:	7320                	.insn	2, 0x7320
+   e:	7379                	lui	t1,0xffffe
+  10:	6574                	.insn	2, 0x6574
+  12:	0a6d                	add	s4,s4,27
+  14:	0000                	unimp
+	...
+
+00000018 <.LC1>:
+  18:	6954                	.insn	2, 0x6954
+  1a:	0a216b63          	bltu	sp,sp,d0 <.L13+0x4>
+	...
+
+00000020 <.LC2>:
+  20:	6f54                	.insn	2, 0x6f54
+  22:	0a216b63          	bltu	sp,sp,d8 <.L3+0x4>
+	...
+
+Disassembly of section .text.startup:
+
+00000000 <main>:
+   0:	1101                	add	sp,sp,-32
+   2:	cc22                	sw	s0,24(sp)
+   4:	ce06                	sw	ra,28(sp)
+   6:	ca26                	sw	s1,20(sp)
+   8:	c84a                	sw	s2,16(sp)
+   a:	c64e                	sw	s3,12(sp)
+   c:	c452                	sw	s4,8(sp)
+   e:	c256                	sw	s5,4(sp)
+
+00000010 <.LBB12>:
+  10:	547d                	li	s0,-1
+  12:	32041073          	csrw	mcountinhibit,s0
+
+00000016 <.LBE12>:
+  16:	00000097          	auipc	ra,0x0
+  1a:	000080e7          	jalr	ra # 16 <.LBE12>
+
+0000001e <.LBB13>:
+  1e:	4781                	li	a5,0
+  20:	32079073          	csrw	mcountinhibit,a5
+
+00000024 <.LBE13>:
+  24:	00000517          	auipc	a0,0x0
+  28:	00050513          	mv	a0,a0
+  2c:	00000097          	auipc	ra,0x0
+  30:	000080e7          	jalr	ra # 2c <.LBE13+0x8>
+
+00000034 <.LVL4>:
+  34:	deadc537          	lui	a0,0xdeadc
+  38:	eef50513          	add	a0,a0,-273 # deadbeef <.LASF17+0xdeadbcf7>
+  3c:	00000097          	auipc	ra,0x0
+  40:	000080e7          	jalr	ra # 3c <.LVL4+0x8>
+
+00000044 <.LVL5>:
+  44:	4529                	li	a0,10
+  46:	00000097          	auipc	ra,0x0
+  4a:	000080e7          	jalr	ra # 46 <.LVL5+0x2>
+
+0000004e <.LVL6>:
+  4e:	baadf537          	lui	a0,0xbaadf
+  52:	0535                	add	a0,a0,13 # baadf00d <.LASF17+0xbaadee15>
+  54:	00000097          	auipc	ra,0x0
+  58:	000080e7          	jalr	ra # 54 <.LVL6+0x6>
+
+0000005c <.LVL7>:
+  5c:	4529                	li	a0,10
+  5e:	00000097          	auipc	ra,0x0
+  62:	000080e7          	jalr	ra # 5e <.LVL7+0x2>
+
+00000066 <.LBB15>:
+  66:	32041073          	csrw	mcountinhibit,s0
+
+0000006a <.LBE15>:
+  6a:	7d000513          	li	a0,2000
+  6e:	4581                	li	a1,0
+  70:	00000097          	auipc	ra,0x0
+  74:	000080e7          	jalr	ra # 70 <.LBE15+0x6>
+
+00000078 <.LVL10>:
+  78:	00000097          	auipc	ra,0x0
+  7c:	000080e7          	jalr	ra # 78 <.LVL10>
+
+00000080 <.LVL11>:
+  80:	84aa                	mv	s1,a0
+  82:	842e                	mv	s0,a1
+
+00000084 <.LVL12>:
+  84:	4991                	li	s3,4
+
+00000086 <.LBB17>:
+  86:	00000a17          	auipc	s4,0x0
+  8a:	000a0a13          	mv	s4,s4
+  8e:	00000a97          	auipc	s5,0x0
+  92:	000a8a93          	mv	s5,s5
+
+00000096 <.L2>:
+  96:	e019                	bnez	s0,9c <.L10>
+  98:	0099fc63          	bgeu	s3,s1,b0 <.L11>
+
+0000009c <.L10>:
+  9c:	40f2                	lw	ra,28(sp)
+  9e:	4462                	lw	s0,24(sp)
+
+000000a0 <.LVL14>:
+  a0:	44d2                	lw	s1,20(sp)
+  a2:	4942                	lw	s2,16(sp)
+  a4:	49b2                	lw	s3,12(sp)
+  a6:	4a22                	lw	s4,8(sp)
+  a8:	4a92                	lw	s5,4(sp)
+  aa:	4501                	li	a0,0
+  ac:	6105                	add	sp,sp,32
+  ae:	8082                	ret
+
+000000b0 <.L11>:
+  b0:	00000097          	auipc	ra,0x0
+  b4:	000080e7          	jalr	ra # b0 <.L11>
+
+000000b8 <.LVL16>:
+  b8:	892a                	mv	s2,a0
+  ba:	842e                	mv	s0,a1
+
+000000bc <.LVL17>:
+  bc:	00a49363          	bne	s1,a0,c2 <.L9>
+  c0:	c991                	beqz	a1,d4 <.L3>
+
+000000c2 <.L9>:
+  c2:	00197793          	and	a5,s2,1
+  c6:	8556                	mv	a0,s5
+
+000000c8 <.LVL19>:
+  c8:	e391                	bnez	a5,cc <.L13>
+  ca:	8552                	mv	a0,s4
+
+000000cc <.L13>:
+  cc:	00000097          	auipc	ra,0x0
+  d0:	000080e7          	jalr	ra # cc <.L13>
+
+000000d4 <.L3>:
+  d4:	10500073          	wfi
+  d8:	84ca                	mv	s1,s2
+  da:	bf75                	j	96 <.L2>
+
+Disassembly of section .debug_info:
+
+00000000 <.Ldebug_info0>:
+   0:	0266                	sll	tp,tp,0x19
+   2:	0000                	unimp
+   4:	0004                	.insn	2, 0x0004
+   6:	0000                	unimp
+   8:	0000                	unimp
+   a:	0104                	add	s1,sp,128
+   c:	0000                	unimp
+   e:	0000                	unimp
+  10:	000c                	.insn	2, 0x000c
+	...
+  22:	0000                	unimp
+  24:	0200                	add	s0,sp,256
+  26:	0601                	add	a2,a2,0
+  28:	0000                	unimp
+  2a:	0000                	unimp
+  2c:	0202                	c.slli64	tp
+  2e:	0005                	c.nop	1
+  30:	0000                	unimp
+  32:	0200                	add	s0,sp,256
+  34:	0504                	add	s1,sp,640
+  36:	0000                	unimp
+  38:	0000                	unimp
+  3a:	0802                	c.slli64	a6
+  3c:	0005                	c.nop	1
+  3e:	0000                	unimp
+  40:	0200                	add	s0,sp,256
+  42:	0801                	add	a6,a6,0
+  44:	0000                	unimp
+  46:	0000                	unimp
+  48:	0202                	c.slli64	tp
+  4a:	00000007          	.insn	4, 0x0007
+  4e:	0200                	add	s0,sp,256
+  50:	0704                	add	s1,sp,896
+  52:	0000                	unimp
+  54:	0000                	unimp
+  56:	00000003          	lb	zero,0(zero) # 0 <.Ldebug_info0>
+  5a:	0300                	add	s0,sp,384
+  5c:	00621937          	lui	s2,0x621
+  60:	0000                	unimp
+  62:	0802                	c.slli64	a6
+  64:	00000007          	.insn	4, 0x0007
+  68:	0400                	add	s0,sp,512
+  6a:	0504                	add	s1,sp,640
+  6c:	6e69                	lui	t3,0x1a
+  6e:	0074                	add	a3,sp,12
+  70:	0402                	c.slli64	s0
+  72:	00000007          	.insn	4, 0x0007
+  76:	0500                	add	s0,sp,640
+  78:	0000                	unimp
+  7a:	0000                	unimp
+  7c:	0701                	add	a4,a4,0
+  7e:	6905                	lui	s2,0x1
+	...
+  88:	0000                	unimp
+  8a:	0100                	add	s0,sp,128
+  8c:	e89c                	.insn	2, 0xe89c
+  8e:	0001                	nop
+  90:	0600                	add	s0,sp,768
+  92:	0000                	unimp
+  94:	0000                	unimp
+  96:	0701                	add	a4,a4,0
+  98:	690e                	.insn	2, 0x690e
+  9a:	0000                	unimp
+  9c:	0000                	unimp
+  9e:	0000                	unimp
+  a0:	0600                	add	s0,sp,768
+  a2:	0000                	unimp
+  a4:	0000                	unimp
+  a6:	0701                	add	a4,a4,0
+  a8:	0001e81b          	.insn	4, 0x0001e81b
+  ac:	0000                	unimp
+  ae:	0000                	unimp
+  b0:	0700                	add	s0,sp,896
+  b2:	0000                	unimp
+  b4:	0000                	unimp
+  b6:	1801                	add	a6,a6,-32
+  b8:	560c                	lw	a1,40(a2)
+  ba:	0000                	unimp
+  bc:	0000                	unimp
+  be:	0000                	unimp
+  c0:	0800                	add	s0,sp,16
+  c2:	0000                	unimp
+  c4:	0000                	unimp
+  c6:	00ed                	add	ra,ra,27
+  c8:	0000                	unimp
+  ca:	00000007          	.insn	4, 0x0007
+  ce:	0100                	add	s0,sp,128
+  d0:	00560e1b          	.insn	4, 0x00560e1b
+  d4:	0000                	unimp
+  d6:	0000                	unimp
+  d8:	0000                	unimp
+  da:	0009                	c.nop	2
+  dc:	0000                	unimp
+  de:	2100                	.insn	2, 0x2100
+  e0:	0002                	c.slli64	zero
+  e2:	0900                	add	s0,sp,144
+  e4:	0000                	unimp
+  e6:	0000                	unimp
+  e8:	022d                	add	tp,tp,11 # b <.Ldebug_info0+0xb>
+  ea:	0000                	unimp
+  ec:	0a00                	add	s0,sp,272
+  ee:	000001fb          	.insn	4, 0x01fb
+	...
+  fa:	0801                	add	a6,a6,0
+  fc:	00011703          	lh	a4,0(sp)
+ 100:	0b00                	add	s0,sp,400
+ 102:	0208                	add	a0,sp,256
+ 104:	0000                	unimp
+ 106:	0000                	unimp
+ 108:	0000                	unimp
+ 10a:	000c                	.insn	2, 0x000c
+ 10c:	0000                	unimp
+ 10e:	0d00                	add	s0,sp,656
+ 110:	0214                	add	a3,sp,256
+ 112:	0000                	unimp
+ 114:	007f 0e00 01fb 0000 	.insn	10, 0x01fb0e00007f
+ 11c:	0000 
+ 11e:	0000                	unimp
+ 120:	0000                	unimp
+ 122:	0000                	unimp
+ 124:	0a01                	add	s4,s4,0 # 86 <.Ldebug_info0+0x86>
+ 126:	00013b03          	lw_sw	s6,0(sp)
+ 12a:	0b00                	add	s0,sp,400
+ 12c:	0208                	add	a0,sp,256
+ 12e:	0000                	unimp
+ 130:	0000                	unimp
+ 132:	0000                	unimp
+ 134:	0002140f          	.insn	4, 0x0002140f
+ 138:	0000                	unimp
+ 13a:	0e00                	add	s0,sp,784
+ 13c:	000001fb          	.insn	4, 0x01fb
+	...
+ 148:	1201                	add	tp,tp,-32 # ffffffe0 <.LASF17+0xfffffde8>
+ 14a:	00015f03          	lhu	t5,0(sp)
+ 14e:	0b00                	add	s0,sp,400
+ 150:	0208                	add	a0,sp,256
+ 152:	0000                	unimp
+ 154:	0000                	unimp
+ 156:	0000                	unimp
+ 158:	140d                	add	s0,s0,-29
+ 15a:	0002                	c.slli64	zero
+ 15c:	7f00                	.insn	2, 0x7f00
+ 15e:	0900                	add	s0,sp,144
+ 160:	0000                	unimp
+ 162:	0000                	unimp
+ 164:	0239                	add	tp,tp,14 # e <.Ldebug_info0+0xe>
+ 166:	0000                	unimp
+ 168:	0010                	.insn	2, 0x0010
+ 16a:	0000                	unimp
+ 16c:	2d00                	.insn	2, 0x2d00
+ 16e:	0002                	c.slli64	zero
+ 170:	7f00                	.insn	2, 0x7f00
+ 172:	0001                	nop
+ 174:	1100                	add	s0,sp,160
+ 176:	5a01                	li	s4,-32
+ 178:	0305                	add	t1,t1,1 # ffffe001 <.LASF17+0xffffde09>
+ 17a:	0000                	unimp
+ 17c:	0000                	unimp
+ 17e:	1000                	add	s0,sp,32
+ 180:	0000                	unimp
+ 182:	0000                	unimp
+ 184:	0245                	add	tp,tp,17 # 11 <.Ldebug_info0+0x11>
+ 186:	0000                	unimp
+ 188:	00000197          	auipc	gp,0x0
+ 18c:	0111                	add	sp,sp,4
+ 18e:	065a                	sll	a2,a2,0x16
+ 190:	ef11                	bnez	a4,1ac <.Ldebug_info0+0x1ac>
+ 192:	b6fd                	j	fffffd80 <.LASF17+0xfffffb88>
+ 194:	7df5                	lui	s11,0xffffd
+ 196:	1000                	add	s0,sp,32
+ 198:	0000                	unimp
+ 19a:	0000                	unimp
+ 19c:	0251                	add	tp,tp,20 # 14 <.Ldebug_info0+0x14>
+ 19e:	0000                	unimp
+ 1a0:	01aa                	sll	gp,gp,0xa
+ 1a2:	0000                	unimp
+ 1a4:	0111                	add	sp,sp,4
+ 1a6:	015a                	sll	sp,sp,0x16
+ 1a8:	003a                	c.slli	zero,0xe
+ 1aa:	0010                	.insn	2, 0x0010
+ 1ac:	0000                	unimp
+ 1ae:	4500                	lw	s0,8(a0)
+ 1b0:	0002                	c.slli64	zero
+ 1b2:	c200                	sw	s0,0(a2)
+ 1b4:	0001                	nop
+ 1b6:	1100                	add	s0,sp,160
+ 1b8:	5a01                	li	s4,-32
+ 1ba:	1106                	sll	sp,sp,0x21
+ 1bc:	e08d                	bnez	s1,1de <.Ldebug_info0+0x1de>
+ 1be:	007bd5b7          	lui	a1,0x7bd
+ 1c2:	0010                	.insn	2, 0x0010
+ 1c4:	0000                	unimp
+ 1c6:	5100                	lw	s0,32(a0)
+ 1c8:	0002                	c.slli64	zero
+ 1ca:	d500                	sw	s0,40(a0)
+ 1cc:	0001                	nop
+ 1ce:	1100                	add	s0,sp,160
+ 1d0:	5a01                	li	s4,-32
+ 1d2:	3a01                	jal	fffffae2 <.LASF17+0xfffff8ea>
+ 1d4:	0900                	add	s0,sp,144
+ 1d6:	0000                	unimp
+ 1d8:	0000                	unimp
+ 1da:	025d                	add	tp,tp,23 # 17 <.Ldebug_info0+0x17>
+ 1dc:	0000                	unimp
+ 1de:	0009                	c.nop	2
+ 1e0:	0000                	unimp
+ 1e2:	2100                	.insn	2, 0x2100
+ 1e4:	0002                	c.slli64	zero
+ 1e6:	0000                	unimp
+ 1e8:	0412                	sll	s0,s0,0x4
+ 1ea:	01ee                	sll	gp,gp,0x1b
+ 1ec:	0000                	unimp
+ 1ee:	0412                	sll	s0,s0,0x4
+ 1f0:	01f4                	add	a3,sp,204
+ 1f2:	0000                	unimp
+ 1f4:	0102                	c.slli64	sp
+ 1f6:	0008                	.insn	2, 0x0008
+ 1f8:	0000                	unimp
+ 1fa:	1300                	add	s0,sp,416
+ 1fc:	0000                	unimp
+ 1fe:	0000                	unimp
+ 200:	3302                	.insn	2, 0x3302
+ 202:	0314                	add	a3,sp,384
+ 204:	0221                	add	tp,tp,8 # 8 <.Ldebug_info0+0x8>
+ 206:	0000                	unimp
+ 208:	0014                	.insn	2, 0x0014
+ 20a:	0000                	unimp
+ 20c:	0200                	add	s0,sp,256
+ 20e:	00692633          	slt	a2,s2,t1
+ 212:	0000                	unimp
+ 214:	0015                	c.nop	5
+ 216:	0000                	unimp
+ 218:	0200                	add	s0,sp,256
+ 21a:	1035                	c.nop	-19
+ 21c:	0070                	add	a2,sp,12
+ 21e:	0000                	unimp
+ 220:	1600                	add	s0,sp,800
+	...
+ 22a:	6002                	.insn	2, 0x6002
+ 22c:	160a                	sll	a2,a2,0x22
+	...
+ 236:	1f02                	sll	t5,t5,0x20
+ 238:	1605                	add	a2,a2,-31
+	...
+ 242:	4302                	lw	t1,0(sp)
+ 244:	1606                	sll	a2,a2,0x21
+	...
+ 24e:	2602                	.insn	2, 0x2602
+ 250:	1606                	sll	a2,a2,0x21
+	...
+ 25a:	1602                	sll	a2,a2,0x20
+ 25c:	1605                	add	a2,a2,-31
+	...
+ 266:	4a02                	lw	s4,0(sp)
+ 268:	0006                	c.slli	zero,0x1
+
+Disassembly of section .debug_abbrev:
+
+00000000 <.Ldebug_abbrev0>:
+   0:	1101                	add	sp,sp,-32
+   2:	2501                	jal	602 <.LASF17+0x40a>
+   4:	130e                	sll	t1,t1,0x23
+   6:	1b0e030b          	.insn	4, 0x1b0e030b
+   a:	550e                	lw	a0,224(sp)
+   c:	10011117          	auipc	sp,0x10011
+  10:	02000017          	auipc	zero,0x2000
+  14:	0024                	add	s1,sp,8
+  16:	0b3e0b0b          	.insn	4, 0x0b3e0b0b
+  1a:	00000e03          	lb	t3,0(zero) # 0 <.Ldebug_abbrev0>
+  1e:	03001603          	lh	a2,48(zero) # 30 <.Ldebug_abbrev0+0x30>
+  22:	3a0e                	.insn	2, 0x3a0e
+  24:	390b3b0b          	.insn	4, 0x390b3b0b
+  28:	0013490b          	.insn	4, 0x0013490b
+  2c:	0400                	add	s0,sp,512
+  2e:	0024                	add	s1,sp,8
+  30:	0b3e0b0b          	.insn	4, 0x0b3e0b0b
+  34:	00000803          	lb	a6,0(zero) # 0 <.Ldebug_abbrev0>
+  38:	2e05                	jal	368 <.LASF17+0x170>
+  3a:	3f01                	jal	ffffff4a <.LASF17+0xfffffd52>
+  3c:	0319                	add	t1,t1,6
+  3e:	3a0e                	.insn	2, 0x3a0e
+  40:	390b3b0b          	.insn	4, 0x390b3b0b
+  44:	4919270b          	.insn	4, 0x4919270b
+  48:	12011113          	.insn	4, 0x12011113
+  4c:	4006                	.insn	2, 0x4006
+  4e:	9718                	.insn	2, 0x9718
+  50:	1942                	sll	s2,s2,0x30
+  52:	1301                	add	t1,t1,-32
+  54:	0000                	unimp
+  56:	0506                	sll	a0,a0,0x1
+  58:	0300                	add	s0,sp,384
+  5a:	3a0e                	.insn	2, 0x3a0e
+  5c:	390b3b0b          	.insn	4, 0x390b3b0b
+  60:	0213490b          	.insn	4, 0x0213490b
+  64:	07000017          	auipc	zero,0x7000
+  68:	0034                	add	a3,sp,8
+  6a:	0b3a0e03          	lb	t3,179(s4)
+  6e:	0b390b3b          	.insn	4, 0x0b390b3b
+  72:	1349                	add	t1,t1,-14
+  74:	1702                	sll	a4,a4,0x20
+  76:	0000                	unimp
+  78:	0b08                	add	a0,sp,400
+  7a:	5501                	li	a0,-32
+  7c:	00130117          	auipc	sp,0x130
+  80:	0900                	add	s0,sp,144
+  82:	8289                	srl	a3,a3,0x2
+  84:	0001                	nop
+  86:	0111                	add	sp,sp,4 # 130080 <.LASF17+0x12fe88>
+  88:	1331                	add	t1,t1,-20
+  8a:	0000                	unimp
+  8c:	1d0a                	sll	s10,s10,0x22
+  8e:	3101                	jal	fffffc8e <.LASF17+0xfffffa96>
+  90:	55015213          	.insn	4, 0x55015213
+  94:	590b5817          	auipc	a6,0x590b5
+  98:	010b570b          	.insn	4, 0x010b570b
+  9c:	0b000013          	li	zero,176
+  a0:	0005                	c.nop	1
+  a2:	1331                	add	t1,t1,-20
+  a4:	1702                	sll	a4,a4,0x20
+  a6:	0000                	unimp
+  a8:	0b0c                	add	a1,sp,400
+  aa:	5501                	li	a0,-32
+  ac:	0d000017          	auipc	zero,0xd000
+  b0:	0034                	add	a3,sp,8
+  b2:	1331                	add	t1,t1,-20
+  b4:	0d1c                	add	a5,sp,656
+  b6:	0000                	unimp
+  b8:	1d0e                	sll	s10,s10,0x23
+  ba:	3101                	jal	fffffcba <.LASF17+0xfffffac2>
+  bc:	12011113          	.insn	4, 0x12011113
+  c0:	5806                	lw	a6,96(sp)
+  c2:	570b590b          	.insn	4, 0x570b590b
+  c6:	0013010b          	.insn	4, 0x0013010b
+  ca:	0f00                	add	s0,sp,912
+  cc:	0034                	add	a3,sp,8
+  ce:	1331                	add	t1,t1,-20
+  d0:	0b1c                	add	a5,sp,400
+  d2:	0000                	unimp
+  d4:	8910                	.insn	2, 0x8910
+  d6:	0182                	c.slli64	gp
+  d8:	1101                	add	sp,sp,-32
+  da:	3101                	jal	fffffcda <.LASF17+0xfffffae2>
+  dc:	00130113          	add	sp,t1,1
+  e0:	1100                	add	s0,sp,160
+  e2:	828a                	mv	t0,sp
+  e4:	0001                	nop
+  e6:	1802                	sll	a6,a6,0x20
+  e8:	4291                	li	t0,4
+  ea:	0018                	.insn	2, 0x0018
+  ec:	1200                	add	s0,sp,288
+  ee:	0b0b000f          	.insn	4, 0x0b0b000f
+  f2:	1349                	add	t1,t1,-14
+  f4:	0000                	unimp
+  f6:	03012e13          	slti	t3,sp,48
+  fa:	3a0e                	.insn	2, 0x3a0e
+  fc:	390b3b0b          	.insn	4, 0x390b3b0b
+ 100:	2019270b          	.insn	4, 0x2019270b
+ 104:	0013010b          	.insn	4, 0x0013010b
+ 108:	1400                	add	s0,sp,544
+ 10a:	0005                	c.nop	1
+ 10c:	0b3a0e03          	lb	t3,179(s4)
+ 110:	0b390b3b          	.insn	4, 0x0b390b3b
+ 114:	1349                	add	t1,t1,-14
+ 116:	0000                	unimp
+ 118:	3415                	jal	fffffb3c <.LASF17+0xfffff944>
+ 11a:	0300                	add	s0,sp,384
+ 11c:	3a0e                	.insn	2, 0x3a0e
+ 11e:	390b3b0b          	.insn	4, 0x390b3b0b
+ 122:	0013490b          	.insn	4, 0x0013490b
+ 126:	1600                	add	s0,sp,800
+ 128:	002e                	c.slli	zero,0xb
+ 12a:	193c193f 0e030e6e 	.insn	8, 0x0e030e6e193c193f
+ 132:	0b3a                	sll	s6,s6,0xe
+ 134:	0b390b3b          	.insn	4, 0x0b390b3b
+ 138:	0000                	unimp
+	...
+
+Disassembly of section .debug_loc:
+
+00000000 <.LLST0>:
+	...
+   8:	0001                	nop
+   a:	005a                	c.slli	zero,0x16
+   c:	0000                	unimp
+   e:	0000                	unimp
+  10:	0000                	unimp
+  12:	0400                	add	s0,sp,512
+  14:	f300                	.insn	2, 0xf300
+  16:	5a01                	li	s4,-32
+  18:	009f 0000 0000      	.insn	6, 0x009f
+  1e:	0000                	unimp
+	...
+
+00000021 <.LLST1>:
+	...
+  29:	0001                	nop
+  2b:	0000005b          	.insn	4, 0x005b
+  2f:	0000                	unimp
+  31:	0000                	unimp
+  33:	0400                	add	s0,sp,512
+  35:	f300                	.insn	2, 0xf300
+  37:	5b01                	li	s6,-32
+  39:	009f 0000 0000      	.insn	6, 0x009f
+  3f:	0000                	unimp
+	...
+
+00000042 <.LLST2>:
+	...
+  4a:	0006                	c.slli	zero,0x1
+  4c:	9359                	srl	a4,a4,0x36
+  4e:	5804                	lw	s1,48(s0)
+  50:	00000493          	li	s1,0
+  54:	0000                	unimp
+  56:	0000                	unimp
+  58:	0000                	unimp
+  5a:	0006                	c.slli	zero,0x1
+  5c:	9359                	srl	a4,a4,0x36
+  5e:	5804                	lw	s1,48(s0)
+  60:	00000493          	li	s1,0
+  64:	0000                	unimp
+  66:	0000                	unimp
+  68:	0000                	unimp
+  6a:	0006                	c.slli	zero,0x1
+  6c:	935a                	add	t1,t1,s6
+  6e:	5804                	lw	s1,48(s0)
+  70:	00000493          	li	s1,0
+  74:	0000                	unimp
+  76:	0000                	unimp
+  78:	0000                	unimp
+  7a:	0006                	c.slli	zero,0x1
+  7c:	9362                	add	t1,t1,s8
+  7e:	5804                	lw	s1,48(s0)
+  80:	00000493          	li	s1,0
+  84:	0000                	unimp
+  86:	0000                	unimp
+	...
+
+0000008a <.LLST6>:
+	...
+  92:	0006                	c.slli	zero,0x1
+  94:	935a                	add	t1,t1,s6
+  96:	5804                	lw	s1,48(s0)
+  98:	00000493          	li	s1,0
+  9c:	0000                	unimp
+  9e:	0000                	unimp
+  a0:	0000                	unimp
+  a2:	0006                	c.slli	zero,0x1
+  a4:	9362                	add	t1,t1,s8
+  a6:	5804                	lw	s1,48(s0)
+  a8:	00000493          	li	s1,0
+  ac:	0000                	unimp
+  ae:	0000                	unimp
+	...
+
+000000b2 <.LLST3>:
+	...
+  ba:	0002                	c.slli64	zero
+  bc:	9f30                	.insn	2, 0x9f30
+	...
+
+000000c6 <.LLST4>:
+	...
+  ce:	0002                	c.slli64	zero
+  d0:	9f31                	.insn	2, 0x9f31
+	...
+
+000000da <.LLST5>:
+	...
+  e2:	0002                	c.slli64	zero
+  e4:	9f30                	.insn	2, 0x9f30
+	...
+
+Disassembly of section .debug_aranges:
+
+00000000 <.debug_aranges>:
+   0:	001c                	.insn	2, 0x001c
+   2:	0000                	unimp
+   4:	0002                	c.slli64	zero
+   6:	0000                	unimp
+   8:	0000                	unimp
+   a:	0004                	.insn	2, 0x0004
+	...
+
+Disassembly of section .debug_ranges:
+
+00000000 <.Ldebug_ranges0>:
+	...
+
+Disassembly of section .debug_line:
+
+00000000 <.Ldebug_line0>:
+   0:	0248                	add	a0,sp,260
+   2:	0000                	unimp
+   4:	01030003          	lb	zero,16(t1)
+   8:	0000                	unimp
+   a:	0101                	add	sp,sp,0
+   c:	000d0efb          	.insn	4, 0x000d0efb
+  10:	0101                	add	sp,sp,0
+  12:	0101                	add	sp,sp,0
+  14:	0000                	unimp
+  16:	0100                	add	s0,sp,128
+  18:	0000                	unimp
+  1a:	2f01                	jal	72a <.LASF17+0x532>
+  1c:	6f68                	.insn	2, 0x6f68
+  1e:	656d                	lui	a0,0x1b
+  20:	63616b2f          	.insn	4, 0x63616b2f
+  24:	6968                	.insn	2, 0x6968
+  26:	614b2f33          	.insn	4, 0x614b2f33
+  2a:	39696863          	bltu	s2,s6,3ba <.LASF17+0x1c2>
+  2e:	65646f43          	.insn	4, 0x65646f43
+  32:	7261482f          	.insn	4, 0x7261482f
+  36:	7764                	.insn	2, 0x7764
+  38:	7261                	lui	tp,0xffff8
+  3a:	2f65                	jal	7f2 <.LASF17+0x5fa>
+  3c:	6c2d4f43          	.insn	4, 0x6c2d4f43
+  40:	6261                	lui	tp,0x18
+  42:	6d2d                	lui	s10,0xb
+  44:	7461                	lui	s0,0xffff8
+  46:	7265                	lui	tp,0xffff9
+  48:	6169                	add	sp,sp,208
+  4a:	2d6c                	.insn	2, 0x2d6c
+  4c:	2f555143          	.insn	4, 0x2f555143
+  50:	6269                	lui	tp,0x1a
+  52:	7865                	lui	a6,0xffff9
+  54:	695f 6573 652f      	.insn	6, 0x652f6573695f
+  5a:	6178                	.insn	2, 0x6178
+  5c:	706d                	c.lui	zero,0xffffb
+  5e:	656c                	.insn	2, 0x656c
+  60:	77732f73          	csrrs	t5,0x777,t1
+  64:	6d69732f          	.insn	4, 0x6d69732f
+  68:	6c70                	.insn	2, 0x6c70
+  6a:	5f65                	li	t5,-7
+  6c:	74737973          	csrrc	s2,0x747,6
+  70:	6d65                	lui	s10,0x19
+  72:	6d6f632f          	.insn	4, 0x6d6f632f
+  76:	6f6d                	lui	t5,0x1b
+  78:	006e                	c.slli	zero,0x1b
+  7a:	6d6f682f          	.insn	4, 0x6d6f682f
+  7e:	2f65                	jal	836 <.LASF17+0x63e>
+  80:	6863616b          	.insn	4, 0x6863616b
+  84:	3369                	jal	fffffe0e <.LASF17+0xfffffc16>
+  86:	776f6c2f          	.insn	4, 0x776f6c2f
+  8a:	6972                	.insn	2, 0x6972
+  8c:	742d6373          	csrrs	t1,0x742,26
+  90:	636c6f6f          	jal	t5,c66c6 <.LASF17+0xc64ce>
+  94:	6168                	.insn	2, 0x6168
+  96:	6e69                	lui	t3,0x1a
+  98:	672d                	lui	a4,0xb
+  9a:	722d6363          	bltu	s10,sp,7c0 <.LASF17+0x5c8>
+  9e:	3376                	.insn	2, 0x3376
+  a0:	6932                	.insn	2, 0x6932
+  a2:	636d                	lui	t1,0x1b
+  a4:	2f62                	.insn	2, 0x2f62
+  a6:	696c                	.insn	2, 0x696c
+  a8:	2f62                	.insn	2, 0x2f62
+  aa:	2f636367          	.insn	4, 0x2f636367
+  ae:	6972                	.insn	2, 0x6972
+  b0:	33766373          	csrrs	t1,mhpmevent23,12
+  b4:	2d32                	.insn	2, 0x2d32
+  b6:	6e75                	lui	t3,0x1d
+  b8:	776f6e6b          	.insn	4, 0x776f6e6b
+  bc:	2d6e                	.insn	2, 0x2d6e
+  be:	6c65                	lui	s8,0x19
+  c0:	2f66                	.insn	2, 0x2f66
+  c2:	3031                	jal	fffff8ce <.LASF17+0xfffff6d6>
+  c4:	322e                	.insn	2, 0x322e
+  c6:	302e                	.insn	2, 0x302e
+  c8:	636e692f          	.insn	4, 0x636e692f
+  cc:	756c                	.insn	2, 0x756c
+  ce:	6564                	.insn	2, 0x6564
+  d0:	0000                	unimp
+  d2:	6568                	.insn	2, 0x6568
+  d4:	6c6c                	.insn	2, 0x6c6c
+  d6:	65745f6f          	jal	t5,45f2c <.LASF17+0x45d34>
+  da:	632e7473          	csrrc	s0,0x632,28
+  de:	0000                	unimp
+  e0:	0000                	unimp
+  e2:	706d6973          	csrrs	s2,0x706,26
+  e6:	656c                	.insn	2, 0x656c
+  e8:	735f 7379 6574      	.insn	6, 0x65747379735f
+  ee:	5f6d                	li	t5,-5
+  f0:	6d6d6f63          	bltu	s10,s6,7ce <.LASF17+0x5d6>
+  f4:	682e6e6f          	jal	t3,e6776 <.LASF17+0xe657e>
+  f8:	0100                	add	s0,sp,128
+  fa:	0000                	unimp
+  fc:	69647473          	csrrc	s0,0x696,8
+ 100:	746e                	.insn	2, 0x746e
+ 102:	672d                	lui	a4,0xb
+ 104:	682e6363          	bltu	t3,sp,78a <.LASF17+0x592>
+ 108:	0200                	add	s0,sp,256
+ 10a:	0000                	unimp
+ 10c:	0500                	add	s0,sp,640
+ 10e:	0021                	c.nop	8
+ 110:	0205                	add	tp,tp,1 # 1a001 <.LASF17+0x19e09>
+ 112:	0000                	unimp
+ 114:	0000                	unimp
+ 116:	0518                	add	a4,sp,640
+ 118:	09010303          	lb	t1,144(sp)
+ 11c:	0000                	unimp
+ 11e:	0401                	add	s0,s0,0 # ffff8000 <.LASF17+0xffff7e08>
+ 120:	0302                	c.slli64	t1
+ 122:	092d                	add	s2,s2,11 # 100b <.LASF17+0xe13>
+ 124:	0000                	unimp
+ 126:	0301                	add	t1,t1,0 # 1b000 <.LASF17+0x1ae08>
+ 128:	00000907          	.insn	4, 0x0907
+ 12c:	0401                	add	s0,s0,0
+ 12e:	0501                	add	a0,a0,0 # 1b000 <.LASF17+0x1ae08>
+ 130:	0621                	add	a2,a2,8
+ 132:	00094b03          	lbu	s6,0(s2)
+ 136:	0100                	add	s0,sp,128
+ 138:	0204                	add	s1,sp,256
+ 13a:	0305                	add	t1,t1,1
+ 13c:	00093503          	lw_sw	a0,0(s2)
+ 140:	0100                	add	s0,sp,128
+ 142:	0104                	add	s1,sp,128
+ 144:	0306                	sll	t1,t1,0x1
+ 146:	094d                	add	s2,s2,19
+ 148:	0000                	unimp
+ 14a:	0301                	add	t1,t1,0
+ 14c:	0901                	add	s2,s2,0
+ 14e:	0000                	unimp
+ 150:	0401                	add	s0,s0,0
+ 152:	0302                	c.slli64	t1
+ 154:	0000092b          	.insn	4, 0x092b
+ 158:	0301                	add	t1,t1,0
+ 15a:	00000907          	.insn	4, 0x0907
+ 15e:	0401                	add	s0,s0,0
+ 160:	0301                	add	t1,t1,0
+ 162:	0950                	add	a2,sp,148
+ 164:	0000                	unimp
+ 166:	0301                	add	t1,t1,0
+ 168:	0901                	add	s2,s2,0
+ 16a:	0000                	unimp
+ 16c:	0301                	add	t1,t1,0
+ 16e:	0901                	add	s2,s2,0
+ 170:	0000                	unimp
+ 172:	0301                	add	t1,t1,0
+ 174:	0901                	add	s2,s2,0
+ 176:	0000                	unimp
+ 178:	0301                	add	t1,t1,0
+ 17a:	0901                	add	s2,s2,0
+ 17c:	0000                	unimp
+ 17e:	0301                	add	t1,t1,0
+ 180:	0902                	c.slli64	s2
+ 182:	0000                	unimp
+ 184:	0401                	add	s0,s0,0
+ 186:	0302                	c.slli64	t1
+ 188:	00000923          	sb	zero,18(zero) # 12 <.Ldebug_line0+0x12>
+ 18c:	0301                	add	t1,t1,0
+ 18e:	00000907          	.insn	4, 0x0907
+ 192:	0401                	add	s0,s0,0
+ 194:	0301                	add	t1,t1,0
+ 196:	095a                	sll	s2,s2,0x16
+ 198:	0000                	unimp
+ 19a:	0301                	add	t1,t1,0
+ 19c:	0902                	c.slli64	s2
+ 19e:	0000                	unimp
+ 1a0:	0501                	add	a0,a0,0
+ 1a2:	0620                	add	s0,sp,776
+ 1a4:	00090003          	lb	zero,0(s2)
+ 1a8:	0100                	add	s0,sp,128
+ 1aa:	0305                	add	t1,t1,1
+ 1ac:	0306                	sll	t1,t1,0x1
+ 1ae:	0902                	c.slli64	s2
+ 1b0:	0000                	unimp
+ 1b2:	0501                	add	a0,a0,0
+ 1b4:	0609                	add	a2,a2,2
+ 1b6:	00090003          	lb	zero,0(s2)
+ 1ba:	0100                	add	s0,sp,128
+ 1bc:	00090803          	lb	a6,0(s2)
+ 1c0:	0100                	add	s0,sp,128
+ 1c2:	00097e03          	.insn	4, 0x00097e03
+ 1c6:	0100                	add	s0,sp,128
+ 1c8:	0306                	sll	t1,t1,0x1
+ 1ca:	097a                	sll	s2,s2,0x1e
+ 1cc:	0000                	unimp
+ 1ce:	0501                	add	a0,a0,0
+ 1d0:	090e0303          	lb	t1,144(t3) # 1d090 <.LASF17+0x1ce98>
+ 1d4:	0000                	unimp
+ 1d6:	0501                	add	a0,a0,0
+ 1d8:	0601                	add	a2,a2,0
+ 1da:	00090103          	lb	sp,0(s2)
+ 1de:	0100                	add	s0,sp,128
+ 1e0:	0505                	add	a0,a0,1
+ 1e2:	0306                	sll	t1,t1,0x1
+ 1e4:	0972                	sll	s2,s2,0x1c
+ 1e6:	0000                	unimp
+ 1e8:	0501                	add	a0,a0,0
+ 1ea:	0619                	add	a2,a2,6
+ 1ec:	00090003          	lb	zero,0(s2)
+ 1f0:	0100                	add	s0,sp,128
+ 1f2:	0505                	add	a0,a0,1
+ 1f4:	0306                	sll	t1,t1,0x1
+ 1f6:	0901                	add	s2,s2,0
+ 1f8:	0000                	unimp
+ 1fa:	0501                	add	a0,a0,0
+ 1fc:	0608                	add	a0,sp,768
+ 1fe:	00090003          	lb	zero,0(s2)
+ 202:	0100                	add	s0,sp,128
+ 204:	0705                	add	a4,a4,1 # b001 <.LASF17+0xae09>
+ 206:	0306                	sll	t1,t1,0x1
+ 208:	0901                	add	s2,s2,0
+ 20a:	0000                	unimp
+ 20c:	0301                	add	t1,t1,0
+ 20e:	0902                	c.slli64	s2
+ 210:	0000                	unimp
+ 212:	0501                	add	a0,a0,0
+ 214:	061d                	add	a2,a2,7
+ 216:	00090003          	lb	zero,0(s2)
+ 21a:	0100                	add	s0,sp,128
+ 21c:	0905                	add	s2,s2,1
+ 21e:	00090103          	lb	sp,0(s2)
+ 222:	0100                	add	s0,sp,128
+ 224:	0a05                	add	s4,s4,1
+ 226:	00097f03          	.insn	4, 0x00097f03
+ 22a:	0100                	add	s0,sp,128
+ 22c:	0905                	add	s2,s2,1
+ 22e:	0306                	sll	t1,t1,0x1
+ 230:	00000903          	lb	s2,0(zero) # 0 <.Ldebug_line0>
+ 234:	0501                	add	a0,a0,0
+ 236:	0305                	add	t1,t1,1
+ 238:	00000903          	lb	s2,0(zero) # 0 <.Ldebug_line0>
+ 23c:	0501                	add	a0,a0,0
+ 23e:	0619                	add	a2,a2,6
+ 240:	00097603          	.insn	4, 0x00097603
+ 244:	0100                	add	s0,sp,128
+ 246:	0009                	c.nop	2
+ 248:	0000                	unimp
+ 24a:	0101                	add	sp,sp,0
+
+Disassembly of section .debug_str:
+
+00000000 <.LASF25>:
+   0:	6370                	.insn	2, 0x6370
+   2:	746e756f          	jal	a0,e7748 <.LASF17+0xe7550>
+   6:	655f 616e 6c62      	.insn	6, 0x6c62616e655f
+   c:	0065                	c.nop	25
+
+0000000e <.LASF22>:
+   e:	6d6f682f          	.insn	4, 0x6d6f682f
+  12:	2f65                	jal	7ca <.LASF17+0x5d2>
+  14:	6863616b          	.insn	4, 0x6863616b
+  18:	3369                	jal	fffffda2 <.LASF17+0xfffffbaa>
+  1a:	63614b2f          	.insn	4, 0x63614b2f
+  1e:	6968                	.insn	2, 0x6968
+  20:	4339                	li	t1,14
+  22:	2f65646f          	jal	s0,56318 <.LASF17+0x56120>
+  26:	6148                	.insn	2, 0x6148
+  28:	6472                	.insn	2, 0x6472
+  2a:	65726177          	.insn	4, 0x65726177
+  2e:	2d4f432f          	.insn	4, 0x2d4f432f
+  32:	616c                	.insn	2, 0x616c
+  34:	2d62                	.insn	2, 0x2d62
+  36:	616d                	add	sp,sp,240
+  38:	6574                	.insn	2, 0x6574
+  3a:	6972                	.insn	2, 0x6972
+  3c:	6c61                	lui	s8,0x18
+  3e:	432d                	li	t1,11
+  40:	5551                	li	a0,-12
+  42:	6562692f          	.insn	4, 0x6562692f
+  46:	5f78                	lw	a4,124(a4)
+  48:	7369                	lui	t1,0xffffa
+  4a:	2f65                	jal	802 <.LASF17+0x60a>
+  4c:	7865                	lui	a6,0xffff9
+  4e:	6d61                	lui	s10,0x18
+  50:	6c70                	.insn	2, 0x6c70
+  52:	7365                	lui	t1,0xffff9
+  54:	2f77732f          	.insn	4, 0x2f77732f
+  58:	706d6973          	csrrs	s2,0x706,26
+  5c:	656c                	.insn	2, 0x656c
+  5e:	735f 7379 6574      	.insn	6, 0x65747379735f
+  64:	2f6d                	jal	81e <.LASF17+0x626>
+  66:	6568                	.insn	2, 0x6568
+  68:	6c6c                	.insn	2, 0x6c6c
+  6a:	65745f6f          	jal	t5,45ec0 <.LASF17+0x45cc8>
+  6e:	          	csrrc	s0,0x740,0
+
+00000071 <.LASF19>:
+  71:	6974                	.insn	2, 0x6974
+  73:	656d                	lui	a0,0x1b
+  75:	5f72                	lw	t5,60(sp)
+  77:	6e65                	lui	t3,0x19
+  79:	6261                	lui	tp,0x18
+  7b:	656c                	.insn	2, 0x656c
+	...
+
+0000007e <.LASF26>:
+  7e:	6e65                	lui	t3,0x19
+  80:	6261                	lui	tp,0x18
+  82:	656c                	.insn	2, 0x656c
+	...
+
+00000085 <.LASF23>:
+  85:	6975                	lui	s2,0x1d
+  87:	746e                	.insn	2, 0x746e
+  89:	3436                	.insn	2, 0x3436
+  8b:	745f        	.insn	6, 0x73616c00745f
+
+0000008e <.LASF11>:
+  8e:	616c                	.insn	2, 0x616c
+  90:	655f7473          	csrrc	s0,hviph,30
+  94:	616c                	.insn	2, 0x616c
+  96:	7370                	.insn	2, 0x7370
+  98:	6465                	lui	s0,0x19
+  9a:	745f 6d69 0065      	.insn	6, 0x00656d69745f
+
+000000a0 <.LASF27>:
+  a0:	6e69                	lui	t3,0x1a
+  a2:	6968                	.insn	2, 0x6968
+  a4:	6962                	.insn	2, 0x6962
+  a6:	5f74                	lw	a3,124(a4)
+  a8:	6176                	.insn	2, 0x6176
+  aa:	006c                	add	a1,sp,12
+
+000000ac <.LASF4>:
+  ac:	6e75                	lui	t3,0x1d
+  ae:	6e676973          	csrrs	s2,0x6e6,14
+  b2:	6465                	lui	s0,0x19
+  b4:	6320                	.insn	2, 0x6320
+  b6:	6168                	.insn	2, 0x6168
+  b8:	0072                	c.slli	zero,0x1c
+
+000000ba <.LASF21>:
+  ba:	6568                	.insn	2, 0x6568
+  bc:	6c6c                	.insn	2, 0x6c6c
+  be:	65745f6f          	jal	t5,45f14 <.LASF17+0x45d1c>
+  c2:	632e7473          	csrrc	s0,0x632,28
+	...
+
+000000c7 <.LASF6>:
+  c7:	6f6c                	.insn	2, 0x6f6c
+  c9:	676e                	.insn	2, 0x676e
+  cb:	7520                	.insn	2, 0x7520
+  cd:	736e                	.insn	2, 0x736e
+  cf:	6769                	lui	a4,0x1a
+  d1:	656e                	.insn	2, 0x656e
+  d3:	2064                	.insn	2, 0x2064
+  d5:	6e69                	lui	t3,0x1a
+  d7:	0074                	add	a3,sp,12
+
+000000d9 <.LASF5>:
+  d9:	726f6873          	csrrs	a6,mhpmevent6h,30
+  dd:	2074                	.insn	2, 0x2074
+  df:	6e75                	lui	t3,0x1d
+  e1:	6e676973          	csrrs	s2,0x6e6,14
+  e5:	6465                	lui	s0,0x19
+  e7:	6920                	.insn	2, 0x6920
+  e9:	746e                	.insn	2, 0x746e
+	...
+
+000000ec <.LASF18>:
+  ec:	7570                	.insn	2, 0x7570
+  ee:	6374                	.insn	2, 0x6374
+  f0:	6168                	.insn	2, 0x6168
+  f2:	0072                	c.slli	zero,0x1c
+
+000000f4 <.LASF14>:
+  f4:	5f746567          	.insn	4, 0x5f746567
+  f8:	6c65                	lui	s8,0x19
+  fa:	7061                	c.lui	zero,0xffff8
+  fc:	5f646573          	csrrs	a0,0x5f6,8
+ 100:	6974                	.insn	2, 0x6974
+ 102:	656d                	lui	a0,0x1b
+	...
+
+00000105 <.LASF24>:
+ 105:	616d                	add	sp,sp,240
+ 107:	6e69                	lui	t3,0x1a
+	...
+
+0000010a <.LASF8>:
+ 10a:	6e75                	lui	t3,0x1d
+ 10c:	6e676973          	csrrs	s2,0x6e6,14
+ 110:	6465                	lui	s0,0x19
+ 112:	6920                	.insn	2, 0x6920
+ 114:	746e                	.insn	2, 0x746e
+	...
+
+00000117 <.LASF20>:
+ 117:	20554e47          	.insn	4, 0x20554e47
+ 11b:	20373143          	.insn	4, 0x20373143
+ 11f:	3031                	jal	fffff92b <.LASF17+0xfffff733>
+ 121:	322e                	.insn	2, 0x322e
+ 123:	302e                	.insn	2, 0x302e
+ 125:	2d20                	.insn	2, 0x2d20
+ 127:	616d                	add	sp,sp,240
+ 129:	6372                	.insn	2, 0x6372
+ 12b:	3d68                	.insn	2, 0x3d68
+ 12d:	7672                	.insn	2, 0x7672
+ 12f:	6d693233          	.insn	4, 0x6d693233
+ 133:	6d2d2063          	.insn	4, 0x6d2d2063
+ 137:	6261                	lui	tp,0x18
+ 139:	3d69                	jal	ffffffd3 <.LASF17+0xfffffddb>
+ 13b:	6c69                	lui	s8,0x1a
+ 13d:	3370                	.insn	2, 0x3370
+ 13f:	2032                	.insn	2, 0x2032
+ 141:	6d2d                	lui	s10,0xb
+ 143:	646f6d63          	bltu	t5,t1,79d <.LASF17+0x5a5>
+ 147:	6c65                	lui	s8,0x19
+ 149:	6d3d                	lui	s10,0xf
+ 14b:	6465                	lui	s0,0x19
+ 14d:	6e61                	lui	t3,0x18
+ 14f:	2079                	jal	1dd <.LASF15+0x3>
+ 151:	6d2d                	lui	s10,0xb
+ 153:	7261                	lui	tp,0xffff8
+ 155:	723d6863          	bltu	s10,gp,885 <.LASF17+0x68d>
+ 159:	3376                	.insn	2, 0x3376
+ 15b:	6932                	.insn	2, 0x6932
+ 15d:	636d                	lui	t1,0x1b
+ 15f:	2d20                	.insn	2, 0x2d20
+ 161:	4f2d2067          	.insn	4, 0x4f2d2067
+ 165:	662d2073          	csrs	0x662,s10
+ 169:	6976                	.insn	2, 0x6976
+ 16b:	69626973          	csrrs	s2,0x696,4
+ 16f:	696c                	.insn	2, 0x696c
+ 171:	7974                	.insn	2, 0x7974
+ 173:	683d                	lui	a6,0xf
+ 175:	6469                	lui	s0,0x1a
+ 177:	6564                	.insn	2, 0x6564
+ 179:	206e                	.insn	2, 0x206e
+ 17b:	662d                	lui	a2,0xb
+ 17d:	7266                	.insn	2, 0x7266
+ 17f:	6565                	lui	a0,0x19
+ 181:	6e617473          	csrrc	s0,0x6e6,2
+ 185:	6964                	.insn	2, 0x6964
+ 187:	676e                	.insn	2, 0x676e
+	...
+
+0000018a <.LASF7>:
+ 18a:	6f6c                	.insn	2, 0x6f6c
+ 18c:	676e                	.insn	2, 0x676e
+ 18e:	6c20                	.insn	2, 0x6c20
+ 190:	20676e6f          	jal	t3,76396 <.LASF17+0x7619e>
+ 194:	6e75                	lui	t3,0x1d
+ 196:	6e676973          	csrrs	s2,0x6e6,14
+ 19a:	6465                	lui	s0,0x19
+ 19c:	6920                	.insn	2, 0x6920
+ 19e:	746e                	.insn	2, 0x746e
+	...
+
+000001a1 <.LASF12>:
+ 1a1:	5f727563          	bgeu	tp,s7,78b <.LASF17+0x593>
+ 1a5:	6974                	.insn	2, 0x6974
+ 1a7:	656d                	lui	a0,0x1b
+	...
+
+000001aa <.LASF9>:
+ 1aa:	7261                	lui	tp,0xffff8
+ 1ac:	          	.insn	4, 0x6c006367
+
+000001af <.LASF3>:
+ 1af:	6f6c                	.insn	2, 0x6f6c
+ 1b1:	676e                	.insn	2, 0x676e
+ 1b3:	6c20                	.insn	2, 0x6c20
+ 1b5:	20676e6f          	jal	t3,763bb <.LASF17+0x761c3>
+ 1b9:	6e69                	lui	t3,0x1a
+ 1bb:	0074                	add	a3,sp,12
+
+000001bd <.LASF13>:
+ 1bd:	72616863          	bltu	sp,t1,8ed <.LASF17+0x6f5>
+	...
+
+000001c2 <.LASF1>:
+ 1c2:	726f6873          	csrrs	a6,mhpmevent6h,30
+ 1c6:	2074                	.insn	2, 0x2074
+ 1c8:	6e69                	lui	t3,0x1a
+ 1ca:	0074                	add	a3,sp,12
+
+000001cc <.LASF10>:
+ 1cc:	7261                	lui	tp,0xffff8
+ 1ce:	          	.insn	4, 0x6c007667
+
+000001d1 <.LASF2>:
+ 1d1:	6f6c                	.insn	2, 0x6f6c
+ 1d3:	676e                	.insn	2, 0x676e
+ 1d5:	6920                	.insn	2, 0x6920
+ 1d7:	746e                	.insn	2, 0x746e
+	...
+
+000001da <.LASF15>:
+ 1da:	7570                	.insn	2, 0x7570
+ 1dc:	7374                	.insn	2, 0x7374
+	...
+
+000001df <.LASF0>:
+ 1df:	6e676973          	csrrs	s2,0x6e6,14
+ 1e3:	6465                	lui	s0,0x19
+ 1e5:	6320                	.insn	2, 0x6320
+ 1e7:	6168                	.insn	2, 0x6168
+ 1e9:	0072                	c.slli	zero,0x1c
+
+000001eb <.LASF16>:
+ 1eb:	6370                	.insn	2, 0x6370
+ 1ed:	746e756f          	jal	a0,e7933 <.LASF17+0xe773b>
+ 1f1:	725f 7365 7465      	.insn	6, 0x74657365725f
+	...
+
+000001f8 <.LASF17>:
+ 1f8:	7570                	.insn	2, 0x7570
+ 1fa:	6874                	.insn	2, 0x6874
+ 1fc:	7865                	lui	a6,0xffff9
+	...
+
+Disassembly of section .comment:
+
+00000000 <.comment>:
+   0:	4700                	lw	s0,8(a4)
+   2:	203a4343          	.insn	4, 0x203a4343
+   6:	6328                	.insn	2, 0x6328
+   8:	6f72                	.insn	2, 0x6f72
+   a:	6f747373          	csrrc	t1,0x6f7,8
+   e:	4e2d6c6f          	jal	s8,d64f0 <.LASF17+0xd62f8>
+  12:	2e312047          	.insn	4, 0x2e312047
+  16:	3432                	.insn	2, 0x3432
+  18:	302e                	.insn	2, 0x302e
+  1a:	342e                	.insn	2, 0x342e
+  1c:	3839                	jal	fffff83a <.LASF17+0xfffff642>
+  1e:	355f 3730 6535      	.insn	6, 0x65353730355f
+  24:	6631                	lui	a2,0xc
+  26:	2029                	jal	30 <.LBE13+0xc>
+  28:	3031                	jal	fffff834 <.LASF17+0xfffff63c>
+  2a:	322e                	.insn	2, 0x322e
+  2c:	302e                	.insn	2, 0x302e
+	...
+
+Disassembly of section .debug_frame:
+
+00000000 <.debug_frame>:
+   0:	000c                	.insn	2, 0x000c
+   2:	0000                	unimp
+   4:	ffff                	.insn	2, 0xffff
+   6:	ffff                	.insn	2, 0xffff
+   8:	7c010003          	lb	zero,1984(sp)
+   c:	0d01                	add	s10,s10,0 # b000 <.LASF17+0xae08>
+   e:	0002                	c.slli64	zero
+  10:	0034                	add	a3,sp,8
+	...
+  1e:	0000                	unimp
+  20:	0e42                	sll	t3,t3,0x10
+  22:	4e20                	lw	s0,88(a2)
+  24:	0288                	add	a0,sp,320
+  26:	0181                	add	gp,gp,0 # 188 <.LASF20+0x71>
+  28:	0389                	add	t2,t2,2
+  2a:	0492                	sll	s1,s1,0x4
+  2c:	06940593          	add	a1,s0,105 # 19069 <.LASF17+0x18e71>
+  30:	0795                	add	a5,a5,5
+  32:	8e02                	jr	t3
+  34:	c10a                	sw	sp,128(sp)
+  36:	c842                	sw	a6,16(sp)
+  38:	c942                	sw	a6,144(sp)
+  3a:	d242                	sw	a6,36(sp)
+  3c:	d342                	sw	a6,164(sp)
+  3e:	d442                	sw	a6,40(sp)
+  40:	d542                	sw	a6,168(sp)
+  42:	0e44                	add	s1,sp,788
+  44:	4200                	lw	s0,0(a2)
+  46:	Address 0x46 is out of bounds.
+
+
+Disassembly of section .riscv.attributes:
+
+00000000 <.riscv.attributes>:
+   0:	2941                	jal	490 <.LASF17+0x298>
+   2:	0000                	unimp
+   4:	7200                	.insn	2, 0x7200
+   6:	7369                	lui	t1,0xffffa
+   8:	01007663          	bgeu	zero,a6,14 <.riscv.attributes+0x14>
+   c:	001f 0000 1004      	.insn	6, 0x10040000001f
+  12:	7205                	lui	tp,0xfffe1
+  14:	3376                	.insn	2, 0x3376
+  16:	6932                	.insn	2, 0x6932
+  18:	7032                	.insn	2, 0x7032
+  1a:	5f30                	lw	a2,120(a4)
+  1c:	326d                	jal	fffff9c6 <.LASF17+0xfffff7ce>
+  1e:	3070                	.insn	2, 0x3070
+  20:	635f 7032 0030      	.insn	6, 0x00307032635f
+  26:	0108                	add	a0,sp,128
+  28:	0b0a                	sll	s6,s6,0x2

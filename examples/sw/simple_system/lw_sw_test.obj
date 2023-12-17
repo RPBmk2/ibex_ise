@@ -1,0 +1,31 @@
+
+lw_sw_test.o:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	4105                	li	sp,1
+   2:	002020a3          	sw	sp,1(zero) # 1 <_start+0x1>
+   6:	428d                	li	t0,3
+   8:	00502323          	sw	t0,6(zero) # 6 <_start+0x6>
+   c:	4189                	li	gp,2
+
+Disassembly of section .riscv.attributes:
+
+00000000 <.riscv.attributes>:
+   0:	2341                	jal	580 <_start+0x580>
+   2:	0000                	unimp
+   4:	7200                	flw	fs0,32(a2)
+   6:	7369                	lui	t1,0xffffa
+   8:	01007663          	bgeu	zero,a6,14 <_start+0x14>
+   c:	0019                	c.nop	6
+   e:	0000                	unimp
+  10:	7205                	lui	tp,0xfffe1
+  12:	3376                	fld	ft6,376(sp)
+  14:	6932                	flw	fs2,12(sp)
+  16:	7032                	flw	ft0,44(sp)
+  18:	5f30                	lw	a2,120(a4)
+  1a:	326d                	jal	fffff9c4 <_start+0xfffff9c4>
+  1c:	3070                	fld	fa2,224(s0)
+  1e:	635f 7032 0030      	0x307032635f

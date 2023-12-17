@@ -4,13 +4,10 @@ build
 # Common editor/IDE config and temporary files
 .project
 .vscode/
-examples/
 .sw[a-p]
 tags
 kachi_test.gtkw
-.gitignore
 sim.fst
-*~
 
 
 # ibex_tracer log file
