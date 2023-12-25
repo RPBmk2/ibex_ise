@@ -51,10 +51,10 @@ int main(int argc, char **argv) {
     puts("Test Pass!\n Stored Value is : ");
     puthex(mem_res);
   }
-  // else{
-  //   puts("Test Failed!\n Stored Value is : ");
-  //   puthex(mem_res);
-  // }
+  else{
+    puts("Test Failed!\n Stored Value is : ");
+    puthex(mem_res);
+  }
   // while (last_elapsed_time <= 4) {
   //   uint64_t cur_time = get_elapsed_time();
   //   if (cur_time != last_elapsed_time) {
