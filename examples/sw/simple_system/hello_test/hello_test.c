@@ -38,6 +38,8 @@ int main(int argc, char **argv) {
                     // t4 = sw_data
                     "sw t4, %5(t5)\n"
                     // mem[lw_data + immc] = sw_data
+                    "addi t0, x0, 0\n"
+                    // rd2 is t0
                     "lw_sw x%5, %4(t2)\n"
                     // temp = mem[t2 + immb];
                     // rf[prev_rd_num] = mem[temp + immc];

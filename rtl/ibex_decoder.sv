@@ -169,10 +169,10 @@ module ibex_decoder #(
   assign instr_rs2 = instr[24:20];
   assign instr_rs3 = instr[31:27];
   assign rf_raddr_a_o = (use_rs3_q & ~instr_first_cycle_i) ? instr_rs3 : instr_rs1; // rs3 / rs1
-  assign rf_raddr_b_o = lw_lw_en_o? instr_prev_rd_id_i: instr_rs2; 
+  assign rf_raddr_b_o = instr_rs2; 
 
   // destination register
-  assign instr_rd = instr[11:7];
+  assign instr_rd = lw_lw_en_o ? instr_prev_rd_id_i: instr[11:7];
   assign rf_waddr_o   = instr_rd; // rd
 
   ////////////////////
