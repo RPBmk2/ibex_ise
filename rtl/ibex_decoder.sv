@@ -625,7 +625,7 @@ module ibex_decoder #(
           endcase
 
           // rs1 and rd must be 0
-          if (instr_rs1 != 5'b0 || instr_rd != 5'b0) begin
+          if (instr_rs1 != 5'b0 || instr[11:7] != 5'b0) begin
             illegal_insn = 1'b1;
           end
         end else begin
