@@ -535,7 +535,7 @@ module ibex_if_stage import ibex_pkg::*; #(
     end
   end
 
-  // To get the prev instr's rd number for lw_sw insn
+  // To get the prev instr's rd number for lw_lw insn
   if (ResetAll) begin : prev_instr_rd_reserve
     always_ff @(posedge clk_i or negedge rst_ni) begin
       if (!rst_ni) begin

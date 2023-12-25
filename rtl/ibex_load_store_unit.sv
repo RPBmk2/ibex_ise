@@ -37,7 +37,7 @@ module ibex_load_store_unit #(
   // signals to/from ID/EX stage
   input  logic         lsu_we_i,             // write enable                     -> from ID/EX
   input  logic [1:0]   lsu_type_i,           // data type: word, half word, byte -> from ID/EX
-  input  logic         lsu_lw_sw_en_i,
+  input  logic         lsu_lw_lw_en_i,
   input  logic [31:0]  lsu_wdata_i,          // data to write to memory          -> from ID/EX
   input  logic [31:0]  lsu_operand_c_i,
   input  logic         lsu_sign_ext_i,       // sign extension                   -> from ID/EX
@@ -59,7 +59,7 @@ module ibex_load_store_unit #(
                                               // response)                        -> to ID/EX
 
   output logic         lsu_resp_valid_o,     // LSU has response from transaction -> to ID/EX
-  output logic         lsu_valid_nostall_o,  // LSU give the end of stallmem      -> to ID/EX
+  output logic         lsu_valid_notstall_o,  // LSU give the end of stallmem      -> to ID/EX
 
   // exception signals
   output logic         load_err_o,
@@ -112,10 +112,10 @@ module ibex_load_store_unit #(
 
   ls_fsm_e ls_fsm_cs, ls_fsm_ns;
 
-  logic lsu_lw_sw_state;
+  logic lsu_lw_lw_state;
 
   always_comb begin
-    if (lsu_lw_sw_state & (ls_fsm_cs == IDLE)) begin
+    if (lsu_lw_lw_state & (ls_fsm_cs == IDLE)) begin
       data_addr   = data_rdata_rsrv + lsu_operand_c_i;
     end else begin 
       data_addr   = adder_result_ex_i;
@@ -218,7 +218,7 @@ module ibex_load_store_unit #(
       rdata_offset_q  <= data_offset;
       data_type_q     <= lsu_type_i;
       data_sign_ext_q <= lsu_sign_ext_i;
-      data_we_q       <= (lsu_we_i | lsu_lw_sw_state); //todo
+      data_we_q       <= (lsu_we_i | lsu_lw_lw_state); //todo
     end
   end
 
@@ -377,11 +377,11 @@ module ibex_load_store_unit #(
 
   always @(posedge clk_i or negedge rst_ni) begin
     if (!rst_ni) begin
-      lsu_lw_sw_state <= '0;
+      lsu_lw_lw_state <= '0;
       data_rdata_rsrv <= '0;
     end
-    else if(lsu_lw_sw_en_i & data_rvalid_i & (ls_fsm_cs == IDLE)) begin
-      lsu_lw_sw_state <= ~lsu_lw_sw_state;
+    else if(lsu_lw_lw_en_i & data_rvalid_i & (ls_fsm_cs == IDLE)) begin
+      lsu_lw_lw_state <= ~lsu_lw_lw_state;
       data_rdata_rsrv <= rdata_w_ext;
     end
   end
@@ -506,7 +506,7 @@ module ibex_load_store_unit #(
   end
 
   assign lsu_req_done_o = (lsu_req_i | (ls_fsm_cs != IDLE)) & (ls_fsm_ns == IDLE) & 
-      (~lsu_lw_sw_en_i | (lsu_lw_sw_state & data_rvalid_i));
+      (~lsu_lw_lw_en_i | (lsu_lw_lw_state & data_rvalid_i));
 
   // registers for FSM
   always_ff @(posedge clk_i or negedge rst_ni) begin
@@ -528,12 +528,12 @@ module ibex_load_store_unit #(
   /////////////
 
   assign data_or_pmp_err    = lsu_err_q | data_bus_err_i | pmp_err_q;
-  assign lsu_valid_nostall_o   = ((data_rvalid_i & ~lsu_lw_sw_en_i) | (data_rvalid_i & lsu_lw_sw_state) 
+  assign lsu_valid_notstall_o   = ((data_rvalid_i & ~lsu_lw_lw_en_i) | (data_rvalid_i & lsu_lw_lw_state) 
       | pmp_err_q) & (ls_fsm_cs == IDLE);
   assign lsu_resp_valid_o   = (data_rvalid_i | pmp_err_q) & (ls_fsm_cs == IDLE);
   assign lsu_rdata_valid_o  =
-    (ls_fsm_cs == IDLE) & data_rvalid_i & ~data_or_pmp_err & ~data_we_q & ~lsu_lw_sw_en_i & ~data_intg_err;
-
+    (ls_fsm_cs == IDLE) & data_rvalid_i & ~data_or_pmp_err & ((data_we_q & ~lsu_lw_lw_en_i) | lsu_lw_lw_state) & ~data_intg_err;
+    
   // output to register file
   assign lsu_rdata_o = data_rdata_ext;
 
@@ -542,13 +542,7 @@ module ibex_load_store_unit #(
 
   // output to data interface
   assign data_addr_o   = data_addr_w_aligned;
-  always_comb begin
-    if (lsu_lw_sw_state) begin
-      data_we_o   = 1'b1;
-    end else begin 
-      data_we_o   = lsu_we_i;
-    end
-  end
+  assign data_we_o     = lsu_we_i;
   assign data_be_o     = data_be;
 
   /////////////////////////////////////

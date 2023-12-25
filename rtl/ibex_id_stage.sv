@@ -68,7 +68,7 @@ module ibex_id_stage #(
   // Stalls
   input  logic                      ex_valid_i,       // EX stage has valid output
   input  logic                      lsu_resp_valid_i, // LSU has valid output, or is done
-  input  logic                      lsu_valid_nostall_i, //LSU give the end of stall
+  input  logic                      lsu_valid_notstall_i, //LSU give the end of stall
   // ALU
   output ibex_pkg::alu_op_e         alu_operator_ex_o,
   output logic [31:0]               alu_operand_a_ex_o,
@@ -115,7 +115,7 @@ module ibex_id_stage #(
   output logic                      lsu_req_o,
   output logic                      lsu_we_o,
   output logic [1:0]                lsu_type_o,
-  output logic                      lsu_lw_sw_en_o,
+  output logic                      lsu_lw_lw_en_o,
   output logic                      lsu_sign_ext_o,
   output logic [31:0]               lsu_wdata_o,
 
@@ -504,7 +504,7 @@ module ibex_id_stage #(
     .data_req_o           (lsu_req_dec),
     .data_we_o            (lsu_we),
     .data_type_o          (lsu_type),
-    .lw_sw_en_o           (lsu_lw_sw_en_o),
+    .lw_lw_en_o           (lsu_lw_lw_en_o),
     .data_sign_extension_o(lsu_sign_ext),
 
     // jump/branches
@@ -577,7 +577,7 @@ module ibex_id_stage #(
     .wfi_insn_i      (wfi_insn_dec),
     .ebrk_insn_i     (ebrk_insn),
     .csr_pipe_flush_i(csr_pipe_flush),
-    // .lw_sw_insn_i    (lw_sw_en_o),
+    // .lw_lw_insn_i    (lw_lw_en_o),
 
     // from IF-ID pipeline
     .instr_valid_i          (instr_valid_i),
@@ -1034,7 +1034,7 @@ module ibex_id_stage #(
 
     // Without Writeback Stage always stall the first cycle of a load/store.
     // Then stall until it is complete
-    assign stall_mem = instr_valid_i & (lsu_req_dec & (~lsu_valid_nostall_i | instr_first_cycle));
+    assign stall_mem = instr_valid_i & (lsu_req_dec & (~lsu_valid_notstall_i | instr_first_cycle));
 
     // No load hazards without Writeback Stage
     assign stall_ld_hz   = 1'b0;

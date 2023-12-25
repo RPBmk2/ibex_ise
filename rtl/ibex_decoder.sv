@@ -90,7 +90,7 @@ module ibex_decoder #(
   output logic                 data_we_o,             // write enable
   output logic [1:0]           data_type_o,           // size of transaction: byte, half
                                                       // word or word
-  output logic                 lw_sw_en_o,
+  output logic                 lw_lw_en_o,
   output logic                 data_sign_extension_o, // sign extension for data read from
                                                       // memory
 
@@ -169,10 +169,10 @@ module ibex_decoder #(
   assign instr_rs2 = instr[24:20];
   assign instr_rs3 = instr[31:27];
   assign rf_raddr_a_o = (use_rs3_q & ~instr_first_cycle_i) ? instr_rs3 : instr_rs1; // rs3 / rs1
-  assign rf_raddr_b_o = lw_sw_en_o? instr_prev_rd_id_i: instr_rs2; // rs2 todo
+  assign rf_raddr_b_o = instr_rs2; 
 
   // destination register
-  assign instr_rd = instr[11:7];
+  assign instr_rd = lw_lw_en_o? instr_prev_rd_id_i: instr[11:7];
   assign rf_waddr_o   = instr_rd; // rd
 
   ////////////////////
@@ -224,7 +224,7 @@ module ibex_decoder #(
 
     data_we_o             = 1'b0;
     data_type_o           = 2'b00;
-    lw_sw_en_o            = 1'b0;
+    lw_lw_en_o            = 1'b0;
     data_sign_extension_o = 1'b0;
     data_req_o            = 1'b0;
 
@@ -334,10 +334,10 @@ module ibex_decoder #(
           end
 
           2'b11: begin
-            data_type_o = 2'b00;    // lw_sw
+            data_type_o = 2'b00;    // lw_lw
             data_req_o  = 1'b1;
             data_we_o   = 1'b0;
-            lw_sw_en_o  = 1'b1;      //others should be set to 0
+            lw_lw_en_o  = 1'b1;      //others should be set to 0
           end
 
           default: begin
