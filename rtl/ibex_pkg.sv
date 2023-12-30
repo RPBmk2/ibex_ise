@@ -236,11 +236,12 @@ package ibex_pkg;
   //////////////
 
   // Operand a selection
-  typedef enum logic[1:0] {
+  typedef enum logic[2:0] {
     OP_A_REG_A,
     OP_A_FWD,
     OP_A_CURRPC,
-    OP_A_IMM
+    OP_A_IMM,
+    OP_C_IMM
   } op_a_sel_e;
 
   // Immediate a selection

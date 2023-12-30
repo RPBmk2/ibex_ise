@@ -1,0 +1,133 @@
+[*]
+[*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
+[*] Mon Dec 25 16:10:59 2023
+[*]
+[dumpfile] "/home/kachi3/Kachi9Code/Hardware/CO-lab-material-CQU/ibex_ise/sim.fst"
+[dumpfile_mtime] "Mon Dec 25 16:06:07 2023"
+[dumpfile_size] 712441
+[savefile] "/home/kachi3/Kachi9Code/Hardware/CO-lab-material-CQU/ibex_ise/kachi_test.gtkw"
+[timestart] 213
+[size] 1845 1016
+[pos] -1 -1
+*-2.000000 224 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] TOP.
+[treeopen] TOP.ibex_simple_system.
+[treeopen] TOP.ibex_simple_system.u_top.
+[treeopen] TOP.ibex_simple_system.u_top.u_ibex_top.
+[treeopen] TOP.ibex_simple_system.u_top.u_ibex_top.gen_regfile_ff.
+[treeopen] TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.
+[treeopen] TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.
+[treeopen] TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.
+[sst_width] 314
+[signals_width] 291
+[sst_expanded] 1
+[sst_vpaned_height] 289
+@28
+TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.clk_i
+TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.stall_mem
+TOP.ibex_simple_system.u_top.u_ibex_top.instr_rvalid_i
+@100000028
+TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.ls_fsm_cs[2:0]
+@c00022
+TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+@28
+(0)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(1)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(2)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(3)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(4)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(5)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(6)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(7)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(8)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(9)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(10)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(11)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(12)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(13)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(14)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(15)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(16)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(17)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(18)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(19)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(20)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(21)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(22)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(23)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(24)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(25)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(26)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(27)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(28)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(29)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(30)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+(31)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+@1401200
+-group_end
+@28
+TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.lsu_req
+TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.data_rvalid_i
+TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.data_we_o
+@22
+TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr_rd[4:0]
+TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.data_addr[31:0]
+TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.adder_result_ex_i[31:0]
+TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.adder_result_ex_i[31:0]
+TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_operand_c_i[31:0]
+TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.data_rdata_rsrv[31:0]
+TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.rdata_w_ext[31:0]
+@c00022
+TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+@28
+(0)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(1)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(2)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(3)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(4)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(5)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(6)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(7)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(8)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(9)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(10)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(11)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(12)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(13)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(14)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(15)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(16)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(17)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(18)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(19)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(20)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(21)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(22)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(23)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(24)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(25)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(26)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(27)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(28)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(29)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(30)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+(31)TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_rdata_o[31:0]
+@1401200
+-group_end
+@22
+TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.lsu_wdata_i[31:0]
+TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.load_store_unit_i.data_wdata_o[31:0]
+TOP.ibex_simple_system.u_top.u_ibex_top.gen_regfile_ff.register_file_i.rf_reg[5][31:0]
+TOP.ibex_simple_system.u_top.u_ibex_top.gen_regfile_ff.register_file_i.rf_reg[6][31:0]
+TOP.ibex_simple_system.u_top.u_ibex_top.gen_regfile_ff.register_file_i.rf_reg[30][31:0]
+TOP.ibex_simple_system.u_top.u_ibex_top.gen_regfile_ff.register_file_i.waddr_a_i[4:0]
+TOP.ibex_simple_system.u_top.u_ibex_top.gen_regfile_ff.register_file_i.wdata_a_i[31:0]
+@29
+TOP.ibex_simple_system.u_top.u_ibex_top.gen_regfile_ff.register_file_i.we_a_i
+[pattern_trace] 1
+[pattern_trace] 0
+!100000@@
+?"00054783
+@c00023
+TOP.ibex_simple_system.u_top.u_ibex_top.u_ibex_core.id_stage_i.decoder_i.instr[31:0]
+!!

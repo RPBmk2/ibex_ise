@@ -36,6 +36,7 @@ module ibex_id_stage #(
   // Interface to IF stage
   input  logic                      instr_valid_i,
   input  logic [31:0]               instr_rdata_i,         // from IF-ID pipeline registers
+  input  logic [4: 0]               instr_prev_rd_id_i,  // from IF-ID pipeline registers
   input  logic [31:0]               instr_rdata_alu_i,     // from IF-ID pipeline registers
   input  logic [15:0]               instr_rdata_c_i,       // from IF-ID pipeline registers
   input  logic                      instr_is_compressed_i,
@@ -161,9 +162,7 @@ module ibex_id_stage #(
   // Register file write (via writeback)
   output logic [4:0]                rf_waddr_id_o,
   output logic [31:0]               rf_wdata_id_o,
-  output logic [31:0]               rf_wdata_id_imm_c_o,//lui_addi imm_a out from id
   output logic                      rf_we_id_o,
-  output logic                      rf_lui_addi_we_id_o,
   output logic                      rf_rd_a_wb_match_o,
   output logic                      rf_rd_b_wb_match_o,
 
@@ -238,7 +237,7 @@ module ibex_id_stage #(
   logic [31:0] imm_u_type;
   logic [31:0] imm_j_type;
   logic [31:0] zimm_rs1_type;
-
+  logic [31:0] imm_c;
   logic [31:0] imm_a;       // contains the immediate for operand b
   logic [31:0] imm_b;       // contains the immediate for operand b
 
@@ -309,6 +308,7 @@ module ibex_id_stage #(
 
   // Main ALU immediate MUX for Operand A
   assign imm_a = (imm_a_mux_sel == IMM_A_Z) ? zimm_rs1_type : '0;
+  assign imm_c = {27'b0, instr_rdata_i[11:7]};
 
   // Main ALU MUX for Operand A
   always_comb begin : alu_operand_a_mux
@@ -317,6 +317,7 @@ module ibex_id_stage #(
       OP_A_FWD:    alu_operand_a = lsu_addr_last_i;
       OP_A_CURRPC: alu_operand_a = pc_id_i;
       OP_A_IMM:    alu_operand_a = imm_a;
+      OP_C_IMM:    alu_operand_a = imm_c;
       default:     alu_operand_a = pc_id_i;
     endcase
   end
@@ -416,7 +417,6 @@ module ibex_id_stage #(
 
   // Suppress register write if there is an illegal CSR access or instruction is not executing
   assign rf_we_id_o = rf_we_raw & instr_executing & ~illegal_csr_insn_i;
-  assign rf_lui_addi_we_id_o = rf_lui_addi_we_dec;
 
   // Register file write data mux
   always_comb begin : rf_wdata_id_mux
@@ -427,7 +427,6 @@ module ibex_id_stage #(
     endcase
   end
 
-  assign rf_wdata_id_imm_c_o = imm_a; //lui_addi assign imm_a to output
 
   /////////////
   // Decoder //
@@ -454,6 +453,7 @@ module ibex_id_stage #(
     .icache_inval_o(icache_inval_o),
 
     // from IF-ID pipeline register
+    .instr_prev_rd_id_i(instr_prev_rd_id_i),
     .instr_first_cycle_i(instr_first_cycle),
     .instr_rdata_i      (instr_rdata_i),
     .instr_rdata_alu_i  (instr_rdata_alu_i),
@@ -475,7 +475,6 @@ module ibex_id_stage #(
     // register file
     .rf_wdata_sel_o(rf_wdata_sel),
     .rf_we_o       (rf_we_dec),
-    .rf_lui_addi_we_o (rf_lui_addi_we_dec),
 
     .rf_raddr_a_o(rf_raddr_a_o),
     .rf_raddr_b_o(rf_raddr_b_o),
@@ -1154,3 +1153,5 @@ module ibex_id_stage #(
   `endif
 
 endmodule
+
+

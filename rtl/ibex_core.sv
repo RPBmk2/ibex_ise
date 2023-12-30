@@ -244,9 +244,7 @@ module ibex_core import ibex_pkg::*; #(
 
   logic [4:0]  rf_waddr_id;
   logic [31:0] rf_wdata_id;
-  logic [31:0] rf_wdata_id_imm_c;
   logic        rf_we_id;
-  logic        rf_lui_addi_we_id;
   logic        rf_rd_a_wb_match;
   logic        rf_rd_b_wb_match;
 
@@ -254,6 +252,7 @@ module ibex_core import ibex_pkg::*; #(
   alu_op_e     alu_operator_ex;
   logic [31:0] alu_operand_a_ex;
   logic [31:0] alu_operand_b_ex;
+  logic [4: 0] instr_prev_rd_id;
 
   logic [31:0] bt_a_operand;
   logic [31:0] bt_b_operand;
@@ -455,6 +454,7 @@ module ibex_core import ibex_pkg::*; #(
     .instr_valid_id_o        (instr_valid_id),
     .instr_new_id_o          (instr_new_id),
     .instr_rdata_id_o        (instr_rdata_id),
+    .instr_prev_rd_id_o      (instr_prev_rd_id),
     .instr_rdata_alu_id_o    (instr_rdata_alu_id),
     .instr_rdata_c_id_o      (instr_rdata_c_id),
     .instr_is_compressed_id_o(instr_is_compressed_id),
@@ -551,6 +551,7 @@ module ibex_core import ibex_pkg::*; #(
     .instr_valid_i        (instr_valid_id),
     .instr_rdata_i        (instr_rdata_id),
     .instr_rdata_alu_i    (instr_rdata_alu_id),
+    .instr_prev_rd_id_i   (instr_prev_rd_id),
     .instr_rdata_c_i      (instr_rdata_c_id),
     .instr_is_compressed_i(instr_is_compressed_id),
     .instr_bp_taken_i     (instr_bp_taken_id),
@@ -665,9 +666,7 @@ module ibex_core import ibex_pkg::*; #(
     .rf_ren_b_o        (rf_ren_b),
     .rf_waddr_id_o     (rf_waddr_id),
     .rf_wdata_id_o     (rf_wdata_id),
-    .rf_wdata_id_imm_c_o  (rf_wdata_id_imm_c),  //lui_addi logic
     .rf_we_id_o        (rf_we_id),
-    .rf_lui_addi_we__o  (rf_lui_addi_we_id),
     .rf_rd_a_wb_match_o(rf_rd_a_wb_match),
     .rf_rd_b_wb_match_o(rf_rd_b_wb_match),
 
@@ -823,9 +822,7 @@ module ibex_core import ibex_pkg::*; #(
 
     .rf_waddr_id_i(rf_waddr_id),
     .rf_wdata_id_i(rf_wdata_id),
-    .rf_wdata_imm_c_i (rf_wdata_id_imm_c),//lui_addi wb stage port in
     .rf_we_id_i   (rf_we_id),
-    .rf_lui_addi_we_i (rf_lui_addi_we_id)
 
     .dummy_instr_id_i(dummy_instr_id),
 
