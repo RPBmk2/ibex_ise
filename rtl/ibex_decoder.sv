@@ -113,7 +113,7 @@
    logic [4:0] instr_rs2;
    logic [4:0] instr_rs3;
    logic [4:0] instr_rd;
-   logic       lui_lw_en_o;
+   logic       lui_sw_en_o;
  
    logic        use_rs3_d;
    logic        use_rs3_q;
@@ -169,10 +169,10 @@
    assign instr_rs2 = instr[24:20];
    assign instr_rs3 = instr[31:27];
    assign rf_raddr_a_o = (use_rs3_q & ~instr_first_cycle_i) ? instr_rs3 : instr_rs1; // rs3 / rs1
-   assign rf_raddr_b_o = instr_rs2; 
+   assign rf_raddr_b_o = lui_sw_en_o ? instr_prev_rd_id_i: instr_rs2; 
  
    // destination register
-   assign instr_rd = lui_lw_en_o ? instr_prev_rd_id_i: instr[11:7];
+   assign instr_rd = instr[11:7];
    assign rf_waddr_o   = instr_rd; // rd
  
    ////////////////////
@@ -224,7 +224,7 @@
  
      data_we_o             = 1'b0;
      data_type_o           = 2'b00;
-     lui_lw_en_o            = 1'b0;
+     lui_sw_en_o            = 1'b0;
      data_sign_extension_o = 1'b0;
      data_req_o            = 1'b0;
  
@@ -334,10 +334,10 @@
            end
  
            2'b11: begin
-             data_type_o = 2'b00;    // lui_lw
+             data_type_o = 2'b00;    // lui_sw
              data_req_o  = 1'b1;
-             data_we_o   = 1'b0;
-             lui_lw_en_o  = 1'b1;      //others should be set to 0
+             data_we_o   = 1'b1;
+             lui_sw_en_o  = 1'b1;      //others should be set to 0
            end
  
            default: begin
@@ -799,19 +799,17 @@
        end
  
        OPCODE_LOAD: begin
- 
          // offset from immediate
          if (instr_alu[14:12] == 3'b011) begin
-          // offset from immediate
-          alu_op_a_mux_sel_o  = OP_C_IMM;
-          alu_operator_o      = ALU_ADD;
-          alu_op_b_mux_sel_o  = OP_B_IMM;
-          imm_b_mux_sel_o     = IMM_B_I;
+          alu_op_a_mux_sel_o = OP_A_IMM;
+          alu_op_b_mux_sel_o = OP_B_IMM;
+          alu_operator_o     = ALU_ADD;
+          imm_b_mux_sel_o    = IMM_B_I;
         end
         else begin
           alu_op_a_mux_sel_o  = OP_A_REG_A;
-          alu_operator_o      = ALU_ADD;
           alu_op_b_mux_sel_o  = OP_B_IMM;
+          alu_operator_o      = ALU_ADD;
           imm_b_mux_sel_o     = IMM_B_I;
         end
        end

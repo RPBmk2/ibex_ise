@@ -317,7 +317,6 @@ module ibex_id_stage #(
       OP_A_FWD:    alu_operand_a = lsu_addr_last_i;
       OP_A_CURRPC: alu_operand_a = pc_id_i;
       OP_A_IMM:    alu_operand_a = imm_a;
-      OP_C_IMM:    alu_operand_a = imm_c;
       default:     alu_operand_a = pc_id_i;
     endcase
   end

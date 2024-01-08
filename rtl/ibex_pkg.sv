@@ -240,8 +240,7 @@ package ibex_pkg;
     OP_A_REG_A,
     OP_A_FWD,
     OP_A_CURRPC,
-    OP_A_IMM,
-    OP_C_IMM
+    OP_A_IMM
   } op_a_sel_e;
 
   // Immediate a selection
