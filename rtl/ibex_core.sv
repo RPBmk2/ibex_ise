@@ -252,7 +252,6 @@ module ibex_core import ibex_pkg::*; #(
   alu_op_e     alu_operator_ex;
   logic [31:0] alu_operand_a_ex;
   logic [31:0] alu_operand_b_ex;
-  logic [4: 0] instr_prev_rd_id;
 
   logic [31:0] bt_a_operand;
   logic [31:0] bt_b_operand;
@@ -454,7 +453,6 @@ module ibex_core import ibex_pkg::*; #(
     .instr_valid_id_o        (instr_valid_id),
     .instr_new_id_o          (instr_new_id),
     .instr_rdata_id_o        (instr_rdata_id),
-    .instr_prev_rd_id_o      (instr_prev_rd_id),
     .instr_rdata_alu_id_o    (instr_rdata_alu_id),
     .instr_rdata_c_id_o      (instr_rdata_c_id),
     .instr_is_compressed_id_o(instr_is_compressed_id),
@@ -551,7 +549,6 @@ module ibex_core import ibex_pkg::*; #(
     .instr_valid_i        (instr_valid_id),
     .instr_rdata_i        (instr_rdata_id),
     .instr_rdata_alu_i    (instr_rdata_alu_id),
-    .instr_prev_rd_id_i   (instr_prev_rd_id),
     .instr_rdata_c_i      (instr_rdata_c_id),
     .instr_is_compressed_i(instr_is_compressed_id),
     .instr_bp_taken_i     (instr_bp_taken_id),

@@ -36,7 +36,6 @@ module ibex_id_stage #(
   // Interface to IF stage
   input  logic                      instr_valid_i,
   input  logic [31:0]               instr_rdata_i,         // from IF-ID pipeline registers
-  input  logic [4: 0]               instr_prev_rd_id_i,  // from IF-ID pipeline registers
   input  logic [31:0]               instr_rdata_alu_i,     // from IF-ID pipeline registers
   input  logic [15:0]               instr_rdata_c_i,       // from IF-ID pipeline registers
   input  logic                      instr_is_compressed_i,
@@ -308,7 +307,7 @@ module ibex_id_stage #(
 
   // Main ALU immediate MUX for Operand A
   assign imm_a = (imm_a_mux_sel == IMM_A_Z) ? zimm_rs1_type : '0;
-  assign imm_c = {27'b0, instr_rdata_i[11:7]};
+  assign imm_c = {12'b0, instr_rdata_i[31:12]};
 
   // Main ALU MUX for Operand A
   always_comb begin : alu_operand_a_mux
@@ -317,6 +316,7 @@ module ibex_id_stage #(
       OP_A_FWD:    alu_operand_a = lsu_addr_last_i;
       OP_A_CURRPC: alu_operand_a = pc_id_i;
       OP_A_IMM:    alu_operand_a = imm_a;
+      OP_A_IMM_C:  alu_operand_a = imm_c;
       default:     alu_operand_a = pc_id_i;
     endcase
   end
@@ -452,7 +452,6 @@ module ibex_id_stage #(
     .icache_inval_o(icache_inval_o),
 
     // from IF-ID pipeline register
-    .instr_prev_rd_id_i(instr_prev_rd_id_i),
     .instr_first_cycle_i(instr_first_cycle),
     .instr_rdata_i      (instr_rdata_i),
     .instr_rdata_alu_i  (instr_rdata_alu_i),
@@ -1110,7 +1109,8 @@ module ibex_id_stage #(
       OP_A_REG_A,
       OP_A_FWD,
       OP_A_CURRPC,
-      OP_A_IMM})
+      OP_A_IMM,
+      OP_A_IMM_C})
   `ASSERT_KNOWN_IF(IbexBTAluAOpMuxSelKnown, bt_a_mux_sel, instr_valid_i)
   `ASSERT(IbexBTAluAOpMuxSelValid, instr_valid_i |-> bt_a_mux_sel inside {
       OP_A_REG_A,

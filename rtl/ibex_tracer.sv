@@ -34,7 +34,7 @@
  * to the one produced by objdump. This simplifies the correlation between the static program
  * information from the objdump-generated disassembly, and the runtime information from this tracer.
  */
-module ibex_tracer (
+ module ibex_tracer (
   input logic        clk_i,
   input logic        rst_ni,
 
@@ -673,7 +673,10 @@ module ibex_tracer (
       mnemonic = "lbu";
     end else if (size == 3'b101) begin
       mnemonic = "lhu";
-    end else begin
+    end else if (size == 3'b011) begin
+      mnemonic = "lw_sw";
+    end
+    else begin
       decode_mnemonic("INVALID");
       return;
     end
@@ -1068,3 +1071,5 @@ module ibex_tracer (
   end
 
 endmodule
+
+

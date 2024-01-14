@@ -37,7 +37,6 @@
    // from IF-ID pipeline register
    input  logic                 instr_first_cycle_i,   // instruction read is in its first cycle
    input  logic [31:0]          instr_rdata_i,         // instruction read from memory/cache
-   input  logic [4 :0]          instr_prev_rd_id_i,    // instruction read from memory/cache
    input  logic [31:0]          instr_rdata_alu_i,     // instruction read from memory/cache
                                                        // replicated to ease fan-out)
  
@@ -113,7 +112,6 @@
    logic [4:0] instr_rs2;
    logic [4:0] instr_rs3;
    logic [4:0] instr_rd;
-   logic       lui_sw_en_o;
  
    logic        use_rs3_d;
    logic        use_rs3_q;
@@ -169,7 +167,7 @@
    assign instr_rs2 = instr[24:20];
    assign instr_rs3 = instr[31:27];
    assign rf_raddr_a_o = (use_rs3_q & ~instr_first_cycle_i) ? instr_rs3 : instr_rs1; // rs3 / rs1
-   assign rf_raddr_b_o = lui_sw_en_o ? instr_prev_rd_id_i: instr_rs2; 
+   assign rf_raddr_b_o = instr_rs2; 
  
    // destination register
    assign instr_rd = instr[11:7];
@@ -224,7 +222,6 @@
  
      data_we_o             = 1'b0;
      data_type_o           = 2'b00;
-     lui_sw_en_o            = 1'b0;
      data_sign_extension_o = 1'b0;
      data_req_o            = 1'b0;
  
@@ -336,8 +333,7 @@
            2'b11: begin
              data_type_o = 2'b00;    // lui_sw
              data_req_o  = 1'b1;
-             data_we_o   = 1'b1;
-             lui_sw_en_o  = 1'b1;      //others should be set to 0
+             data_we_o   = 1'b0;
            end
  
            default: begin
@@ -801,7 +797,7 @@
        OPCODE_LOAD: begin
          // offset from immediate
          if (instr_alu[14:12] == 3'b011) begin
-          alu_op_a_mux_sel_o = OP_A_IMM;
+          alu_op_a_mux_sel_o = OP_A_IMM_C;
           alu_op_b_mux_sel_o = OP_B_IMM;
           alu_operator_o     = ALU_ADD;
           imm_b_mux_sel_o    = IMM_B_I;
