@@ -332,7 +332,7 @@
            end
  
            2'b11: begin
-             data_type_o = 2'b00;    // lui_lw
+             data_type_o = 2'b00;    // lui_sw
              data_req_o  = 1'b1;
              data_we_o   = 1'b0;
            end
