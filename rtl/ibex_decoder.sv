@@ -307,6 +307,7 @@
            2'b00:   data_type_o  = 2'b10; // sb
            2'b01:   data_type_o  = 2'b01; // sh
            2'b10:   data_type_o  = 2'b00; // sw
+           2'b11:   data_type_o  = 2'b00; // sw
            default: illegal_insn = 1'b1;
          endcase
        end
@@ -331,7 +332,7 @@
            end
  
            2'b11: begin
-             data_type_o = 2'b00;    // lui_sw
+             data_type_o = 2'b00;    // lui_lw
              data_req_o  = 1'b1;
              data_we_o   = 1'b0;
            end
@@ -783,31 +784,32 @@
        ////////////////
  
        OPCODE_STORE: begin
-         alu_op_a_mux_sel_o = OP_A_REG_A;
-         alu_op_b_mux_sel_o = OP_B_REG_B;
-         alu_operator_o     = ALU_ADD;
- 
-         if (!instr_alu[14]) begin
-           // offset from immediate
-           imm_b_mux_sel_o     = IMM_B_S;
-           alu_op_b_mux_sel_o  = OP_B_IMM;
-         end
-       end
- 
-       OPCODE_LOAD: begin
+        
          // offset from immediate
-         if (instr_alu[14:12] == 3'b011) begin
+        if (instr_alu[14:12] == 3'b011) begin
           alu_op_a_mux_sel_o = OP_A_IMM_C;
           alu_op_b_mux_sel_o = OP_B_IMM;
           alu_operator_o     = ALU_ADD;
-          imm_b_mux_sel_o    = IMM_B_I;
+          imm_b_mux_sel_o    = IMM_B_S;
         end
         else begin
-          alu_op_a_mux_sel_o  = OP_A_REG_A;
-          alu_op_b_mux_sel_o  = OP_B_IMM;
-          alu_operator_o      = ALU_ADD;
-          imm_b_mux_sel_o     = IMM_B_I;
+          alu_op_a_mux_sel_o = OP_A_REG_A;
+          alu_op_b_mux_sel_o = OP_B_REG_B;
+          alu_operator_o     = ALU_ADD;
+  
+          if (!instr_alu[14]) begin
+            // offset from immediate
+            imm_b_mux_sel_o     = IMM_B_S;
+            alu_op_b_mux_sel_o  = OP_B_IMM;
+          end
         end
+       end
+ 
+       OPCODE_LOAD: begin
+        alu_op_a_mux_sel_o  = OP_A_REG_A;
+        alu_op_b_mux_sel_o  = OP_B_IMM;
+        alu_operator_o      = ALU_ADD;
+        imm_b_mux_sel_o     = IMM_B_I;
        end
  
        /////////
