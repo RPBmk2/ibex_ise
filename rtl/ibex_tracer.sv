@@ -694,6 +694,7 @@
       2'b00:  mnemonic = "sb";
       2'b01:  mnemonic = "sh";
       2'b10:  mnemonic = "sw";
+      2'b11:  mnemonic = "lui_sw";
       default: begin
         decode_mnemonic("INVALID");
         return;
