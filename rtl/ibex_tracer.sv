@@ -843,6 +843,9 @@
         INSN_BGE:        decode_b_insn("bge");
         INSN_BLTU:       decode_b_insn("bltu");
         INSN_BGEU:       decode_b_insn("bgeu");
+        INSN_ADDI_BEQ:   decode_b_insn("addi_beq");
+        INSN_ADDI_BNE:   decode_b_insn("addi_bne");
+        INSN_LW_ADDI:    decode_load_insn();
         // OPIMM
         INSN_ADDI: begin
           if (rvfi_insn == 32'h00_00_00_13) begin

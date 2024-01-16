@@ -1349,6 +1349,9 @@ module ibex_alu #(
       ALU_LT,   ALU_LTU,
       ALU_SLT,  ALU_SLTU: result_o = {31'h0,cmp_result};
 
+      // Composite Operations
+      ALU_COMP: result_o = {31'h0,cmp_result};
+
       // MinMax Operations (RV32B)
       ALU_MIN,  ALU_MAX,
       ALU_MINU, ALU_MAXU: result_o = minmax_result;

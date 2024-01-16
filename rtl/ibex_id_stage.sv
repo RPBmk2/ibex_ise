@@ -307,7 +307,7 @@ module ibex_id_stage #(
 
   // Main ALU immediate MUX for Operand A
   assign imm_a = (imm_a_mux_sel == IMM_A_Z) ? zimm_rs1_type : '0;
-  assign imm_c = {12'b0, instr_rdata_i[31:12]};
+  assign imm_c = {20'b0, instr_rdata_i[31:20]};
 
   // Main ALU MUX for Operand A
   always_comb begin : alu_operand_a_mux
@@ -316,7 +316,7 @@ module ibex_id_stage #(
       OP_A_FWD:    alu_operand_a = lsu_addr_last_i;
       OP_A_CURRPC: alu_operand_a = pc_id_i;
       OP_A_IMM:    alu_operand_a = imm_a;
-      OP_A_IMM_C:  alu_operand_a = imm_c;
+      OP_A_OPR_C:  alu_operand_a = rf_rdata_a_fwd + imm_c;
       default:     alu_operand_a = pc_id_i;
     endcase
   end
@@ -1110,7 +1110,7 @@ module ibex_id_stage #(
       OP_A_FWD,
       OP_A_CURRPC,
       OP_A_IMM,
-      OP_A_IMM_C})
+      OP_A_OPR_C})
   `ASSERT_KNOWN_IF(IbexBTAluAOpMuxSelKnown, bt_a_mux_sel, instr_valid_i)
   `ASSERT(IbexBTAluAOpMuxSelValid, instr_valid_i |-> bt_a_mux_sel inside {
       OP_A_REG_A,

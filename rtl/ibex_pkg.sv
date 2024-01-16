@@ -65,6 +65,7 @@ package ibex_pkg;
     OPCODE_OP       = 7'h33,
     OPCODE_LUI      = 7'h37,
     OPCODE_BRANCH   = 7'h63,
+    OPCODE_COMP     = 7'h6b,
     OPCODE_JALR     = 7'h67,
     OPCODE_JAL      = 7'h6f,
     OPCODE_SYSTEM   = 7'h73
@@ -79,6 +80,7 @@ package ibex_pkg;
     // Arithmetics
     ALU_ADD,
     ALU_SUB,
+    ALU_COMP,
 
     // Logics
     ALU_XOR,
@@ -241,7 +243,7 @@ package ibex_pkg;
     OP_A_FWD,
     OP_A_CURRPC,
     OP_A_IMM,
-    OP_A_IMM_C
+    OP_A_OPR_C
   } op_a_sel_e;
 
   // Immediate a selection

@@ -24,6 +24,12 @@ package ibex_tracer_pkg;
   parameter logic [31:0] INSN_BLTU    = { 17'h?,             3'b110, 5'h?, {OPCODE_BRANCH} };
   parameter logic [31:0] INSN_BGEU    = { 17'h?,             3'b111, 5'h?, {OPCODE_BRANCH} };
 
+  //Composite Instruction
+  parameter logic [31:0] INSN_ADDI_BEQ= { 17'h?,             3'b000, 5'h?, {OPCODE_COMP} };
+  parameter logic [31:0] INSN_ADDI_BNE= { 17'h?,             3'b001, 5'h?, {OPCODE_COMP} };
+  parameter logic [31:0] INSN_LW_ADDI = { 17'h?,             3'b010, 5'h?, {OPCODE_COMP} };
+
+
   // OPIMM
   parameter logic [31:0] INSN_ADDI    = { 17'h?,             3'b000, 5'h?, {OPCODE_OP_IMM} };
   parameter logic [31:0] INSN_SLTI    = { 17'h?,             3'b010, 5'h?, {OPCODE_OP_IMM} };
