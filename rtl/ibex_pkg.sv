@@ -80,7 +80,6 @@ package ibex_pkg;
     // Arithmetics
     ALU_ADD,
     ALU_SUB,
-    ALU_COMP,
 
     // Logics
     ALU_XOR,

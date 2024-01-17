@@ -801,7 +801,7 @@
        OPCODE_COMP: begin
         alu_op_a_mux_sel_o  = OP_A_OPR_C;
         alu_op_b_mux_sel_o  = OP_B_REG_B;
-        alu_operator_o      = ALU_EQ;
+        alu_operator_o      = ALU_NE;
        end
        
        OPCODE_LUI: begin  // Load Upper Immediate
