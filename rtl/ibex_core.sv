@@ -287,6 +287,7 @@ module ibex_core import ibex_pkg::*; #(
   logic        lsu_sign_ext;
   logic        lsu_req;
   logic [31:0] lsu_wdata;
+  logic [31:0] lsu_imm_b_i;
   logic        lsu_req_done;
 
   // stall control
@@ -583,6 +584,7 @@ module ibex_core import ibex_pkg::*; #(
     .alu_operator_ex_o (alu_operator_ex),
     .alu_operand_a_ex_o(alu_operand_a_ex),
     .alu_operand_b_ex_o(alu_operand_b_ex),
+    .lsu_imm_b_o       (lsu_imm_b),
 
     .imd_val_q_ex_o (imd_val_q_ex),
     .imd_val_d_ex_i (imd_val_d_ex),
@@ -768,6 +770,7 @@ module ibex_core import ibex_pkg::*; #(
     .lsu_type_i    (lsu_type),
     .lsu_wdata_i   (lsu_wdata),
     .lsu_sign_ext_i(lsu_sign_ext),
+    .lsu_imm_b_i   (lsu_imm_b),
 
     .lsu_rdata_o      (rf_wdata_lsu),
     .lsu_rdata_valid_o(rf_we_lsu),

@@ -271,7 +271,7 @@
          rf_ren_a_o = 1'b1;
        end
  
-       OPCODE_BRANCH, OPCODE_COMP: begin // Branch
+       OPCODE_BRANCH: begin // Branch
          branch_in_dec_o       = 1'b1;
          // Check branch condition selection
          unique case (instr[14:12])
@@ -310,7 +310,17 @@
            default: illegal_insn = 1'b1;
          endcase
        end
- 
+
+       OPCODE_COMP:begin
+         rf_ren_a_o          = 1'b1;
+         data_req_o          = 1'b1;
+         data_type_o         = 2'b11;
+         // sign/zero extension
+         data_sign_extension_o = ~instr[14];
+         // load size
+         data_type_o = 2'b00;      // lw
+       end
+
        OPCODE_LOAD: begin
          rf_ren_a_o          = 1'b1;
          data_req_o          = 1'b1;
@@ -799,9 +809,10 @@
        /////////
        
        OPCODE_COMP: begin
-        alu_op_a_mux_sel_o  = OP_A_OPR_C;
-        alu_op_b_mux_sel_o  = OP_B_REG_B;
-        alu_operator_o      = ALU_NE;
+        alu_op_a_mux_sel_o  = OP_A_REG_A;
+        alu_op_b_mux_sel_o  = OP_B_IMM;
+        alu_operator_o      = ALU_ADD;
+        imm_b_mux_sel_o     = IMM_B_I;
        end
        
        OPCODE_LUI: begin  // Load Upper Immediate

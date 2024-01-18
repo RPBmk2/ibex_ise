@@ -71,6 +71,7 @@ module ibex_id_stage #(
   output ibex_pkg::alu_op_e         alu_operator_ex_o,
   output logic [31:0]               alu_operand_a_ex_o,
   output logic [31:0]               alu_operand_b_ex_o,
+  output logic [31:0]               lsu_imm_b_o,
 
   // Multicycle Operation Stage Register
   input  logic [1:0]                imd_val_we_ex_i,
@@ -670,6 +671,7 @@ module ibex_id_stage #(
   assign alu_operator_ex_o           = alu_operator;
   assign alu_operand_a_ex_o          = alu_operand_a;
   assign alu_operand_b_ex_o          = alu_operand_b;
+  assign lsu_imm_b_o                 = imm_b;
 
   assign mult_en_ex_o                = mult_en_id;
   assign div_en_ex_o                 = div_en_id;

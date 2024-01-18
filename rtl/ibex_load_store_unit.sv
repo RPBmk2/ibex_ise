@@ -39,6 +39,7 @@ module ibex_load_store_unit #(
   input  logic [1:0]   lsu_type_i,           // data type: word, half word, byte -> from ID/EX
   input  logic [31:0]  lsu_wdata_i,          // data to write to memory          -> from ID/EX
   input  logic         lsu_sign_ext_i,       // sign extension                   -> from ID/EX
+  input  logic [31:0]  lsu_imm_b_i,          // For LW_ADDI                      -> from ID/EX
 
   output logic [31:0]  lsu_rdata_o,          // requested data                   -> to ID/EX
   output logic         lsu_rdata_valid_o,
@@ -117,7 +118,8 @@ module ibex_load_store_unit #(
 
   always_comb begin
     unique case (lsu_type_i) // Data type 00 Word, 01 Half word, 11,10 byte
-      2'b00: begin // Writing a word
+      2'b00,
+      2'b11: begin // Writing a word
         if (!handle_misaligned_q) begin // first part of potentially misaligned transaction
           unique case (data_offset)
             2'b00:   data_be = 4'b1111;
@@ -151,8 +153,7 @@ module ibex_load_store_unit #(
         end
       end
 
-      2'b10,
-      2'b11: begin // Writing a byte
+        2'b10: begin // Writing a byte
         unique case (data_offset)
           2'b00:   data_be = 4'b0001;
           2'b01:   data_be = 4'b0010;
@@ -322,7 +323,8 @@ module ibex_load_store_unit #(
     unique case (data_type_q)
       2'b00:       data_rdata_ext = rdata_w_ext;
       2'b01:       data_rdata_ext = rdata_h_ext;
-      2'b10,2'b11: data_rdata_ext = rdata_b_ext;
+      2'b10:        data_rdata_ext = rdata_b_ext;
+      2'b11:        data_rdata_ext = rdata_w_ext + lsu_imm_b_i;
       default:     data_rdata_ext = rdata_w_ext;
     endcase // case (data_type_q)
   end
@@ -360,7 +362,7 @@ module ibex_load_store_unit #(
 
   // check for misaligned accesses that need to be split into two word-aligned accesses
   assign split_misaligned_access =
-      ((lsu_type_i == 2'b00) && (data_offset != 2'b00)) || // misaligned word access
+      ((lsu_type_i == 2'b00 || lsu_type_i == 2'b11) && (data_offset != 2'b00)) || // misaligned word access
       ((lsu_type_i == 2'b01) && (data_offset == 2'b11));   // misaligned half-word access
 
   // FSM
