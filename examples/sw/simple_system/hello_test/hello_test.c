@@ -22,25 +22,19 @@ int main(int argc, char **argv) {
   // timer_enable(2000);
 
   // uint64_t last_elapsed_time = get_elapsed_time();
-  int rs1_num = 25; // sw's address and lui imm
-  int rs2_num = 18; // sw's data reg num and lui imm
-  int immb = 0b010101010110; // low 5bit is just used as immb, high 7bit is also used as immc's high bit 
+  int rs1_value = 25; // sw's address and lui imm
+  int immb = 213; // low 5bit is just used as immb, high 7bit is also used as immc's high bit 
   int sw_data = 222; 
-  int imm_I =(immb>>5) * 8192 + rs2_num*256 + rs1_num * 8;
   int mem_res;
 
-  __asm__ volatile("addi t3, %3, 3\n"
-                    // t3 = immb>>5 * 8192 + rs2_num*256 + rs1_num * 8 + immb + 3
-                    // t3'data is the sw address
-                    "addi x%4, %1, 0\n"
-                    // rf[rs2] = sw_data
-                    "lui_sw x%4, %2(x%5)\n"
-                    // mem[immb>>5 * 8192 + rs2_num*256 + rs1_num * 8 + 3] = sw_data;
-                    "lw %0, %2(t3)"
+  __asm__ volatile("sw %1, %2(%3)\n"
+                    // mem[rs1_value + immb] = sw_data
+                    "lw_addi %0, %3, %2\n"
+                    // rf[rs1] = mem[rs1_value + immb] + immb;
                     :"=r"(mem_res)
-                    :"r"(sw_data), "i"(immb), "r"(imm_I), "i"(rs2_num), "i"(rs1_num));
+                    :"r"(sw_data), "i"(immb), "r"(rs1_value));
   
-  if(mem_res == sw_data){
+  if(mem_res == sw_data + immb){
     puts("Test Pass!\n Load Value is : ");
     puthex(mem_res);
   }

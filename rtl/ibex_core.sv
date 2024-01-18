@@ -287,7 +287,7 @@ module ibex_core import ibex_pkg::*; #(
   logic        lsu_sign_ext;
   logic        lsu_req;
   logic [31:0] lsu_wdata;
-  logic [31:0] lsu_imm_b_i;
+  logic [31:0] lsu_imm_b;
   logic        lsu_req_done;
 
   // stall control

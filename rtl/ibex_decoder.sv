@@ -317,8 +317,6 @@
          data_type_o         = 2'b11;
          // sign/zero extension
          data_sign_extension_o = ~instr[14];
-         // load size
-         data_type_o = 2'b00;      // lw
        end
 
        OPCODE_LOAD: begin
